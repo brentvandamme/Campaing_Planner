@@ -7,6 +7,7 @@ using System;
 using System.Windows;
 using BL.Managers.Interfaces;
 using BL.Managers;
+using Microsoft.Data.SqlClient;
 
 namespace FEWPFGelzenEnGoedGekeurd
 {
@@ -17,13 +18,28 @@ namespace FEWPFGelzenEnGoedGekeurd
         public App()
         {
             ServiceCollection services = new ServiceCollection();
-            string connectionString = "Data Source=.;Initial Catalog=PersonDB; " +
-                                      "Integrated Security=True; " +
-                                      "Trusted_Connection=True; " +
-                                      "TrustServerCertificate=True;";
+            string connectionString = "Data Source=.\\SQLEXPRESS;" +
+                                        "Initial Catalog=CampaignPlanner;" +
+                                        "Integrated Security=True; " +
+                                        "Trusted_Connection=True; " +
+                                        "TrustServerCertificate=True;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    Console.WriteLine("Connection successful!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
 
             // Add DbContext
-            services.AddDbContext<CPDbContext>(opt => opt.UseSqlServer(connectionString), ServiceLifetime.Transient);
+            services.AddDbContext<CPDbContext>(opt => opt.UseSqlServer(connectionString));
 
             // Repositories
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -41,7 +57,7 @@ namespace FEWPFGelzenEnGoedGekeurd
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
+            //base.OnStartup(e);
 
             // Retrieve MainWindow from the service provider and show it
             MainWindow mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
