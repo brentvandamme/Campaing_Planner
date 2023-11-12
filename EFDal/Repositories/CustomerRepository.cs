@@ -11,7 +11,7 @@ namespace EFDal.Repositories
 {
     public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(DbContext dbContext) : base(dbContext)
+        public CustomerRepository(CPDbContext dbContext) : base(dbContext)
         {
         }
         public List<Customer> GetCustomersByName(string name)

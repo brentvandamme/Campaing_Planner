@@ -10,6 +10,10 @@ namespace EFDal
         {
         
         }
+        public CPDbContext(DbContextOptions<CPDbContext> options) : base(options) //***
+        {
+
+        }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Location> Location { get; set; }

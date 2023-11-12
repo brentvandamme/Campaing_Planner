@@ -1,12 +1,13 @@
-﻿using System;
+﻿using EFDal.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFDal.Entities
+namespace BL.Dtos
 {
-    public class Product : BaseEntity
+    public class ProductAdding
     {
         public int NBROfFreeSpots { get; set; }
         public List<Campaign> Campaigns { get; set; }
@@ -14,3 +15,4 @@ namespace EFDal.Entities
         public string Name { get; set; }
     }
 }
+

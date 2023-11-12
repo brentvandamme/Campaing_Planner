@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace EFDal.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
-       where TEntity : BaseEntity
+        where TEntity : BaseEntity
     {
         internal readonly DbContext _dbContext;
         internal readonly DbSet<TEntity> _dbSet;
