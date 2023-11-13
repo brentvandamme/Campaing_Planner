@@ -15,7 +15,7 @@ namespace EFDal.Repositories
         internal readonly DbContext _dbContext;
         internal readonly DbSet<TEntity> _dbSet;
 
-        public GenericRepository(DbContext dbContext)
+        public GenericRepository(CPDbContext dbContext)
         {
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TEntity>();

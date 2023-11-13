@@ -26,20 +26,14 @@ namespace FEWPFGelzenEnGoedGekeurd
     {
 
         private ICustomerManager _customerManager;
-        private MainWindow _mainwindow;
 
-        //public MainWindow()
-        //{
-        //    InitializeComponent();
-        //    //_mainwindow= new MainWindow();
-        //    //_customerManager = default;
-        //}
-
-        public MainWindow(ICustomerManager customerManager, MainWindow mainWindow)
+        public MainWindow()
         {
             InitializeComponent();
-            _mainwindow = mainWindow;
+        }
 
+        public MainWindow(ICustomerManager customerManager) : this()
+        {
             _customerManager = customerManager;
         }
 

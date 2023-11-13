@@ -11,7 +11,7 @@ namespace EFDal.Repositories
 {
     public class CampaignRepository : GenericRepository<Campaign>, ICampaignRepository
     {
-        public CampaignRepository(DbContext dbContext) : base(dbContext)
+        public CampaignRepository(CPDbContext dbContext) : base(dbContext)
         {
         }
 

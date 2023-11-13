@@ -11,7 +11,7 @@ namespace EFDal.Repositories
 {
     public class PlanningRepository : GenericRepository<Planning>, IPlanningRepository
     {
-        public PlanningRepository(DbContext dbContext) : base(dbContext)
+        public PlanningRepository(CPDbContext dbContext) : base(dbContext)
         {
         }
 
