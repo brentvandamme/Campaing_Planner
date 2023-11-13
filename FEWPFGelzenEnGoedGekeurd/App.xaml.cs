@@ -35,20 +35,14 @@ namespace FEWPFGelzenEnGoedGekeurd
             services.AddTransient(typeof(IGenericManager<>), typeof(GenericManager<>));
             services.AddTransient<ICustomerManager, CustomerManager>();
 
-            // Register the MainWindowFactory to create MainWindow instances
-            services.AddSingleton<MainWindowFactory>();
+            // Register the MainWindow with injected ICustomerRepository
+            services.AddSingleton<MainWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
 
-            // Create and show MainWindow using the factory
-            var mainWindowFactory = ServiceProvider.GetRequiredService<MainWindowFactory>();
-            MainWindow mainWindow = mainWindowFactory.CreateMainWindow();
+            // Explicitly create and show the MainWindow
+            MainWindow mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            //base.OnStartup(e);
         }
     }
 }

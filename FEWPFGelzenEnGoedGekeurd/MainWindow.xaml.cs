@@ -16,6 +16,9 @@ using BL;
 using BL.Dtos;
 using BL.Managers;
 using BL.Managers.Interfaces;
+using EFDal.Entities;
+using EFDal.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FEWPFGelzenEnGoedGekeurd
 {
@@ -24,27 +27,28 @@ namespace FEWPFGelzenEnGoedGekeurd
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ICustomerRepository _repo;
 
-        private ICustomerManager _customerManager;
+        //public MainWindow()
+        //{
+        //    InitializeComponent();
+        //}
 
-        public MainWindow()
+        public MainWindow(ICustomerRepository repo)
         {
+            _repo = repo;
             InitializeComponent();
-        }
-
-        public MainWindow(ICustomerManager customerManager) : this()
-        {
-            _customerManager = customerManager;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //CustomerCreationDto customerCreation = new CustomerCreationDto();
-            //customerCreation.FirstName = AddCustomerName.Text;
-            //customerCreation.LastName = AddLastName.Text;
-            //customerCreation.Company = AddCompanyName.Text;
+            Customer customer = new Customer();
+            customer.FirstName = AddCustomerName.Text;
+            customer.LastName = AddLastName.Text;
+            customer.Company = AddCompanyName.Text;
 
-            //_customerManager.Add(customerCreation);
+            _repo.Add(customer);
         }
     }
+
 }

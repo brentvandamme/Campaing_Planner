@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EFDal.Repositories.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerRepository : IGenericRepository<Customer>
     {
         List<Customer> GetCustomersByName(string name);
         List<Customer> GetCustomersByLastName(string lastName);
