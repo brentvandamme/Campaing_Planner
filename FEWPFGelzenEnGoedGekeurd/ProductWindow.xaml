@@ -1,0 +1,29 @@
+﻿<Window x:Class="FEWPFGelzenEnGoedGekeurd.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FEWPFGelzenEnGoedGekeurd"
+        mc:Ignorable="d"
+        Title="ProductWindow" Height="450" Width="800">
+    <Grid>
+        <ToolBar Margin="0,0,0,380" RenderTransformOrigin="0.005,0.121">
+            <Button Content="Customer" Click="NavigateToCustomer"/>
+            <Button Content="Product" Click="NavigateToProduct"/>
+            <Button Content="Campaign" Click="NavigateToCampaign"/>
+            <Button Content="Planning" Click="NavigateToPlanning"/>
+        </ToolBar>
+        <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddProductName"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,104,0,0" TextWrapping="Wrap" Text="NumberOfSpots" VerticalAlignment="Top" Width="232" Name="AddNumberOfFreeSpots"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="price" VerticalAlignment="Top" Width="232" Name="AddPrice"/>
+        <Button Content="Add product" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Click="AddProductClick" Name="AddProduct" RenderTransformOrigin="0.553,3.487"/>
+        <DataGrid Name="AllProductsDatagrid" Margin="364,181,10,93" CanUserAddRows="False" SelectionChanged="AllProducts_SelectionChanged"></DataGrid>
+        <DataGrid Name="AvailableCampaigns" Margin="364,81,10,274" CanUserAddRows="False" SelectionChanged="AvailableCampaigns_SelectionChanged"></DataGrid>
+        <DataGrid Name="UsedCampaings" Margin="10,181,451,93" CanUserAddRows="False"></DataGrid>
+        <Label Content="Campaigns" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Width="129"/>
+        <Label Content="Available Campaigns" HorizontalAlignment="Left" Margin="364,155,0,0" VerticalAlignment="Top"/>
+        <Button Content="Add Campaign" HorizontalAlignment="Left" Margin="364,346,0,0" VerticalAlignment="Top" Click="AddCampaignBtnClick"/>
+        <Button Content="Remove Campaign" HorizontalAlignment="Left" Margin="10,346,0,0" VerticalAlignment="Top" Click="RemoveCampaignBtnClick"/>
+        <Label Content="All products" HorizontalAlignment="Left" Margin="364,54,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

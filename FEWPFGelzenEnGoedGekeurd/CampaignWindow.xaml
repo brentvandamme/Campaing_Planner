@@ -12,7 +12,6 @@
             <Button Content="Product" Click="NavigateToProduct"/>
             <Button Content="Campaign" Click="NavigateToCampaign"/>
             <Button Content="Planning" Click="NavigateToPlanning"/>
-            <!-- Add more buttons as needed -->
         </ToolBar>
         <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCampaignName"/>
         <Button Content="Add Campaign" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Click="Button_Click" Name="AddCampaignButton"/>

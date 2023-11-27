@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BL.Dtos
 {
-    public class ProductAdding
+    public class ProductAddingDto
     {
-        public int NBROfFreeSpots { get; set; }
+        public string NBROfFreeSpots { get; set; }
         public List<Campaign> Campaigns { get; set; }
-        public float Price { get; set; }
+        public string Price { get; set; }
         public string Name { get; set; }
     }
 }

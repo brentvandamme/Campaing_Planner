@@ -17,7 +17,6 @@
             <Button Content="Product" Click="NavigateToProduct"/>
             <Button Content="Campaign" Click="NavigateToCampaign"/>
             <Button Content="Planning" Click="NavigateToPlanning"/>
-            <!-- Add more buttons as needed -->
         </ToolBar>
 
     </Grid>

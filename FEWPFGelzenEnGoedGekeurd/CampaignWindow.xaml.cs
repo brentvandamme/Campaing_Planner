@@ -50,7 +50,11 @@ namespace FEWPFGelzenEnGoedGekeurd
         }
         private void NavigateToProduct(object sender, RoutedEventArgs e)
         {
-
+            var Window = App.ServiceProvider.GetService<ProductWindow>();
+            Window.Left = this.Left;
+            Window.Top = this.Top;
+            this.Hide();
+            Window.Show();
         }
         private void NavigateToCampaign(object sender, RoutedEventArgs e)
         {

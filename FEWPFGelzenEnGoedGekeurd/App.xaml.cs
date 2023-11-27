@@ -31,6 +31,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ICampaignRepository, CampaignRepository>();
+            services.AddTransient<IProductRepositrory, ProductRepository>();
 
             // Managers
             services.AddTransient(typeof(IGenericManager<>), typeof(GenericManager<>));
@@ -40,6 +41,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             // Register the MainWindow with injected ICustomerRepository
             services.AddSingleton<MainWindow>();
             services.AddTransient<CampaignWindow>();
+            services.AddTransient<ProductWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
 
