@@ -24,10 +24,11 @@
                 <!-- Content for Planning Tab -->
             </TabItem>
         </TabControl>
+            
         <TextBox HorizontalAlignment="Left" Margin="26,31,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCustomerName"/>
         <TextBox HorizontalAlignment="Left" Margin="26,54,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="232" Name="AddLastName"/>
         <TextBox HorizontalAlignment="Left" Margin="26,77,0,0" TextWrapping="Wrap" Text="company" VerticalAlignment="Top" Width="232" Name="AddCompanyName"/>
         <Button Content="Add Customer" HorizontalAlignment="Left" Margin="26,100,0,0" VerticalAlignment="Top" Click="Button_Click" Name="AddCustomerBtn"/>
-        
+        <DataGrid Name="CustomerDatagrid" Margin="339,31,29,107"></DataGrid>
     </Grid>
 </Window>

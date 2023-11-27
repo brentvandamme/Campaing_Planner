@@ -28,11 +28,13 @@ namespace FEWPFGelzenEnGoedGekeurd
     public partial class MainWindow : Window
     {
         private ICustomerRepository _repo;
+        private List<Customer> _customerList;
 
         public MainWindow(ICustomerRepository repo)
         {
             _repo = repo;
             InitializeComponent();
+            CustomerDatagrid.ItemsSource= _customerList;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
