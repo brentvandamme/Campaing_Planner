@@ -17,12 +17,14 @@ namespace BL.Managers
         }
         public int Add(CampaignDto entity)
         {
+            //todo eric: alle validatie in 1 keer als er 2 probs zijn wil ik het niet 2 * moeten uitvoeren
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
             if (entity.name.Length < 1)
                 throw new ArgumentException("name is too short");
 
-            Campaign campaign= new Campaign();
+            //todo eric: automapper
+            Campaign campaign = new Campaign();
             campaign.Name = entity.name;
             campaign.SoortCampagne = entity.kindOfCampaign;
 

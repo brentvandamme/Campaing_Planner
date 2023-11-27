@@ -27,7 +27,10 @@ namespace BL.Managers
             Product product = new Product();
 
             int numberOfFreeSpots = 0;
-            Int32.TryParse(productdto.NBROfFreeSpots, out numberOfFreeSpots);
+            if (!Int32.TryParse(productdto.NBROfFreeSpots, out numberOfFreeSpots))
+            {
+                //validatie iets??
+            }
 
             float price = 0;
             float.TryParse(productdto.Price, out price);

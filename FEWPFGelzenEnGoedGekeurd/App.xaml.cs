@@ -19,6 +19,7 @@ namespace FEWPFGelzenEnGoedGekeurd
         {
             ServiceCollection services = new ServiceCollection();
             string connectionString = "Data Source=.\\SQLEXPRESS;" +
+            //string connectionString = "Data Source=.;" +
                                        "Initial Catalog=CampaignPlanner;" +
                                        "Integrated Security=True; " +
                                        "Trusted_Connection=True; " +

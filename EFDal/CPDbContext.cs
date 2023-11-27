@@ -22,7 +22,10 @@ namespace EFDal
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=CampaignPlanner;Integrated Security=True; Trusted_Connection=True; TrustServerCertificate=True;"); }
+            if (!optionsBuilder.IsConfigured) 
+            { 
+                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=CampaignPlanner;Integrated Security=True; Trusted_Connection=True; TrustServerCertificate=True;"); 
+            }
             
         }
 
@@ -30,7 +33,8 @@ namespace EFDal
         {
             //base.OnModelCreating(modelBuilder);
             //modelBuilder.ApplyConfigurationsFromAssembly(Asse)
-
+            
+            //todo eric: opsplitsen marchar max relaties
             modelBuilder.Entity<Product>()
                 .HasMany(p => p.Campaigns);
 
