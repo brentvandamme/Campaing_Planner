@@ -7,28 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TabControl>
-            <TabItem Header="Customer" MouseDoubleClick="MouseDown_onCustomer">
-                <!-- Content for Customer Tab -->
-            </TabItem>
-            <TabItem Header="Campaign" MouseDoubleClick="MouseDown_onCampaign">
-                <!-- Content for Campaign Tab -->
-            </TabItem>
-            <TabItem Header="Product" MouseDown="MouseDown_onProduct">
-                <!-- Content for Product Tab -->
-            </TabItem>
-            <TabItem Header="Location" MouseDown="MouseDown_onLocation">
-                <!-- Content for Location Tab -->
-            </TabItem>
-            <TabItem Header="Planning" MouseDown="MouseDown_onPlanning">
-                <!-- Content for Planning Tab -->
-            </TabItem>
-        </TabControl>
-            
-        <TextBox HorizontalAlignment="Left" Margin="26,31,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCustomerName"/>
-        <TextBox HorizontalAlignment="Left" Margin="26,54,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="232" Name="AddLastName"/>
-        <TextBox HorizontalAlignment="Left" Margin="26,77,0,0" TextWrapping="Wrap" Text="company" VerticalAlignment="Top" Width="232" Name="AddCompanyName"/>
-        <Button Content="Add Customer" HorizontalAlignment="Left" Margin="26,100,0,0" VerticalAlignment="Top" Click="Button_Click" Name="AddCustomerBtn"/>
-        <DataGrid Name="CustomerDatagrid" Margin="339,31,29,107"></DataGrid>
+        <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCustomerName"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,104,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="232" Name="AddLastName"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="company" VerticalAlignment="Top" Width="232" Name="AddCompanyName"/>
+        <Button Content="Add Customer" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Click="Button_Click" Name="AddCustomerBtn"/>
+        <DataGrid Name="CustomerDatagrid" Margin="347,113,27,48"></DataGrid>
+        <ToolBar Margin="0,0,0,380" RenderTransformOrigin="0.005,0.121">
+            <Button Content="Customer" Click="NavigateToCustomer"/>
+            <Button Content="Product" Click="NavigateToProduct"/>
+            <Button Content="Campaign" Click="NavigateToCampaign"/>
+            <Button Content="Planning" Click="NavigateToPlanning"/>
+            <!-- Add more buttons as needed -->
+        </ToolBar>
+
     </Grid>
 </Window>

@@ -34,6 +34,7 @@ namespace FEWPFGelzenEnGoedGekeurd
         {
             _repo = repo;
             InitializeComponent();
+            _customerList = _repo.GetAll();
             CustomerDatagrid.ItemsSource= _customerList;
         }
 
@@ -46,35 +47,26 @@ namespace FEWPFGelzenEnGoedGekeurd
 
             _repo.Add(customer);
         }
-        private void MouseDown_onCustomer(object sender, MouseButtonEventArgs e)
-        {
-            // Handle MouseDown event for Customer TabItem
-            // Add your code here
-        }
 
-        private void MouseDown_onCampaign(object sender, MouseButtonEventArgs e)
+        private void NavigateToCustomer(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void NavigateToProduct(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void NavigateToCampaign(object sender, RoutedEventArgs e)
         {
             var Window = App.ServiceProvider.GetService<CampaignWindow>();
-            Window.WindowState = WindowState.Maximized;
+            Window.Left = this.Left;
+            Window.Top = this.Top;
+            this.Hide();
             Window.Show();
         }
-
-        private void MouseDown_onProduct(object sender, MouseButtonEventArgs e)
+        private void NavigateToPlanning(object sender, RoutedEventArgs e)
         {
-            // Handle MouseDown event for Product TabItem
-            // Add your code here
-        }
 
-        private void MouseDown_onLocation(object sender, MouseButtonEventArgs e)
-        {
-            // Handle MouseDown event for Location TabItem
-            // Add your code here
-        }
-
-        private void MouseDown_onPlanning(object sender, MouseButtonEventArgs e)
-        {
-            // Handle MouseDown event for Planning TabItem
-            // Add your code here
         }
     }
 }

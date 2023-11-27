@@ -7,22 +7,16 @@
         mc:Ignorable="d"
         Title="CampaignWindow" Height="450" Width="800">
     <Grid>
-        <TabControl>
-            <TabItem Header="Customer" MouseDown="MouseDown_onCustomer">
-                <!-- Content for Customer Tab -->
-            </TabItem>
-            <TabItem Header="Campaign" MouseDown="MouseDown_onCampaign">
-                <!-- Content for Campaign Tab -->
-            </TabItem>
-            <TabItem Header="Product" MouseDown="MouseDown_onProduct">
-                <!-- Content for Product Tab -->
-            </TabItem>
-            <TabItem Header="Location" MouseDown="MouseDown_onLocation">
-                <!-- Content for Location Tab -->
-            </TabItem>
-            <TabItem Header="Planning" MouseDown="MouseDown_onPlanning">
-                <!-- Content for Planning Tab -->
-            </TabItem>
-        </TabControl>
+        <ToolBar Margin="0,0,0,380" RenderTransformOrigin="0.005,0.121">
+            <Button Content="Customer" Click="NavigateToCustomer"/>
+            <Button Content="Product" Click="NavigateToProduct"/>
+            <Button Content="Campaign" Click="NavigateToCampaign"/>
+            <Button Content="Planning" Click="NavigateToPlanning"/>
+            <!-- Add more buttons as needed -->
+        </ToolBar>
+        <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCampaignName"/>
+        <Button Content="Add Campaign" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Click="Button_Click" Name="AddCampaignButton"/>
+        <DataGrid Name="CampaignDatagrid" Margin="347,113,27,48"></DataGrid>
+        <ListBox Name="KindOfCampaignsListBox" Margin="10,107,558,246" SelectionChanged="KindOfCampaignsListBox_SelectionChanged"/>
     </Grid>
 </Window>

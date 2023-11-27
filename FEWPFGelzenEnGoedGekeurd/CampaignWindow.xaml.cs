@@ -1,4 +1,7 @@
-﻿using System;
+﻿using EFDal.Entities;
+using EFDal.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,39 +22,67 @@ namespace FEWPFGelzenEnGoedGekeurd
     /// </summary>
     public partial class CampaignWindow : Window
     {
-        public CampaignWindow()
+        private KindOfCampaign _chosenCampaignVal;
+        private ICampaignRepository _repo;
+        private List<Campaign> _campaignwindowList;
+
+        public CampaignWindow(ICampaignRepository repo)
         {
+            _repo = repo;
             InitializeComponent();
+            KindOfCampaignsListBox.ItemsSource = Enum.GetValues(typeof(KindOfCampaign));
+            RefreshCampaingListbox();
         }
 
-        private void MouseDown_onCustomer(object sender, MouseButtonEventArgs e)
+        private void RefreshCampaingListbox()
         {
-            // Handle MouseDown event for Customer TabItem
-            // Add your code here
+            _campaignwindowList = _repo.GetAll();
+            CampaignDatagrid.ItemsSource = null;
+            CampaignDatagrid.ItemsSource = _campaignwindowList;
+        }
+        private void NavigateToCustomer(object sender, RoutedEventArgs e)
+        {
+            var Window = App.ServiceProvider.GetService<MainWindow>();
+            Window.Left = this.Left;
+            Window.Top = this.Top;
+            this.Hide();
+            Window.Show();
+        }
+        private void NavigateToProduct(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void NavigateToCampaign(object sender, RoutedEventArgs e)
+        {
+            var Window = App.ServiceProvider.GetService<CampaignWindow>();
+            Window.Left = this.Left;
+            Window.Top = this.Top;
+            this.Hide();
+            Window.Show();
+        }
+        private void NavigateToPlanning(object sender, RoutedEventArgs e)
+        {
+
         }
 
-        private void MouseDown_onCampaign(object sender, MouseButtonEventArgs e)
+        private void KindOfCampaignsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Handle MouseDown event for Campaign TabItem
-            // Add your code here
+            if (KindOfCampaignsListBox.SelectedItem != null)
+            {
+                KindOfCampaign selectedKind = (KindOfCampaign)KindOfCampaignsListBox.SelectedItem;
+                _chosenCampaignVal = selectedKind;
+            }
         }
 
-        private void MouseDown_onProduct(object sender, MouseButtonEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Handle MouseDown event for Product TabItem
-            // Add your code here
-        }
+            Campaign campaign= new Campaign();
+            campaign.Name= AddCampaignName.Text;
+            campaign.LastUpdate= DateTime.Now;
+            campaign.SoortCampagne = _chosenCampaignVal;
 
-        private void MouseDown_onLocation(object sender, MouseButtonEventArgs e)
-        {
-            // Handle MouseDown event for Location TabItem
-            // Add your code here
-        }
-
-        private void MouseDown_onPlanning(object sender, MouseButtonEventArgs e)
-        {
-            // Handle MouseDown event for Planning TabItem
-            // Add your code here
+            _repo.Add(campaign);
+            RefreshCampaingListbox();
         }
     }
 }
