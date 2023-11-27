@@ -112,7 +112,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             productAddingdto.Price = AddPrice.Text;
             productAddingdto.NBROfFreeSpots = AddNumberOfFreeSpots.Text;
             productAddingdto.Name = AddProductName.Text;
-            productAddingdto.Campaigns = _addedCampaigns;
+           // productAddingdto.Campaigns = _addedCampaigns;
             //Customer customer = new Customer();
             //customer.FirstName = AddCustomerName.Text;
             //customer.LastName = AddLastName.Text;

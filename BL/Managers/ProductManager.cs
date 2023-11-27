@@ -12,8 +12,10 @@ namespace BL.Managers
 {
     public class ProductManager : GenericManager<Product>, IProductManager
     {
-        public ProductManager(IGenericRepository<Product> repository) : base(repository)
+        IProductRepositrory _productRepositrory;
+        public ProductManager(IProductRepositrory repository) : base(repository)
         {
+            _productRepositrory = repository;
         }
 
         public Product GetByName(string name)
@@ -35,7 +37,7 @@ namespace BL.Managers
             product.Name = productdto.Name;
             product.Campaigns = productdto.Campaigns;
 
-            return base.Add(product);
+            return _productRepositrory.Add(product);
         }
     }
 }
