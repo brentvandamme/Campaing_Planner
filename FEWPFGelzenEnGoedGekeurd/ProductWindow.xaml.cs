@@ -1,5 +1,7 @@
 ﻿using BL.Dtos;
+using BL.Managers.Interfaces;
 using EFDal.Entities;
+using EFDal.Repositories;
 using EFDal.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,25 +25,28 @@ namespace FEWPFGelzenEnGoedGekeurd
     /// </summary>
     public partial class ProductWindow : Window
     {
-        private ICampaignRepository _campaignRepo;
+        private ICampaignManager _campaignManager;
+        private IProductManager _productManager;
         private List<Campaign> availableCampaignsList;
-        private List<Campaign> addedCampaigns;
-        public ProductWindow(ICampaignRepository repo)
+        private List<Campaign> _addedCampaigns;
+        public ProductWindow(ICampaignManager campaignManager, IProductManager productManager)
         {
-            _campaignRepo = repo;
+            _campaignManager = campaignManager;
+            _productManager = productManager;
             InitializeComponent();
             RefreshCampaingListbox();
-            addedCampaigns = new List<Campaign>();
+            _addedCampaigns = new List<Campaign>();
 
 
         }
 
         private void RefreshCampaingListbox()
         {
-            availableCampaignsList = _campaignRepo.GetAll();
+            availableCampaignsList = _campaignManager.GetAll();
             AvailableCampaigns.ItemsSource = availableCampaignsList;
             UsedCampaings.ItemsSource = null;
-            UsedCampaings.ItemsSource = addedCampaigns;
+            UsedCampaings.ItemsSource = _addedCampaigns;
+            AllProductsDatagrid.ItemsSource = _productManager.GetAll();
             //_campaignwindowList = _campaignRepo.GetAll();
             //CampaignDatagrid.ItemsSource = null;
             //CampaignDatagrid.ItemsSource = _campaignwindowList;
@@ -50,14 +55,14 @@ namespace FEWPFGelzenEnGoedGekeurd
         private void AddCampaignBtnClick(object sender, RoutedEventArgs e)
         {
             Campaign campaign = (Campaign)AvailableCampaigns.SelectedItem;
-            addedCampaigns.Add(campaign);
+            _addedCampaigns.Add(campaign);
             RefreshCampaingListbox();
         }
 
         private void RemoveCampaignBtnClick(object sender, RoutedEventArgs e)
         {
             Campaign campaignToRemove = (Campaign)UsedCampaings.SelectedItem;
-            addedCampaigns.Remove(campaignToRemove);
+            _addedCampaigns.Remove(campaignToRemove);
             RefreshCampaingListbox();
         }
 
@@ -66,7 +71,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             //AddPrice.Text = AvailableCampaigns.SelectedItem
             //AddNumberOfFreeSpots.Text;
             //AddProductName.Text;
-            //addedCampaigns;
+            //_addedCampaigns;
         }
         private void AllProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -107,13 +112,14 @@ namespace FEWPFGelzenEnGoedGekeurd
             productAddingdto.Price = AddPrice.Text;
             productAddingdto.NBROfFreeSpots = AddNumberOfFreeSpots.Text;
             productAddingdto.Name = AddProductName.Text;
-            productAddingdto.Campaigns = addedCampaigns;
+            productAddingdto.Campaigns = _addedCampaigns;
             //Customer customer = new Customer();
             //customer.FirstName = AddCustomerName.Text;
             //customer.LastName = AddLastName.Text;
             //customer.Company = AddCompanyName.Text;
 
             //_repo.Add(customer);
+            _productManager.Add(productAddingdto);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EFDal.Entities;
+﻿using BL.Dtos;
+using EFDal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace BL.Managers.Interfaces
 {
-    public interface IProductManager
+    public interface IProductManager : IGenericManager<Product>
     {
         Product GetByName(string name);
+
+        int Add(ProductAddingDto dto);
     }
 }
