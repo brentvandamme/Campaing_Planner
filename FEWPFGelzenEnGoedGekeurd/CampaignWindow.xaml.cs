@@ -1,4 +1,6 @@
-﻿using EFDal.Entities;
+﻿using BL.Dtos;
+using BL.Managers.Interfaces;
+using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,12 +25,12 @@ namespace FEWPFGelzenEnGoedGekeurd
     public partial class CampaignWindow : Window
     {
         private KindOfCampaign _chosenCampaignVal;
-        private ICampaignRepository _repo;
+        private ICampaignManager _manager;
         private List<Campaign> _campaignwindowList;
 
-        public CampaignWindow(ICampaignRepository repo)
+        public CampaignWindow(ICampaignManager manager)
         {
-            _repo = repo;
+            _manager = manager;
             InitializeComponent();
             KindOfCampaignsListBox.ItemsSource = Enum.GetValues(typeof(KindOfCampaign));
             RefreshCampaingListbox();
@@ -36,7 +38,7 @@ namespace FEWPFGelzenEnGoedGekeurd
 
         private void RefreshCampaingListbox()
         {
-            _campaignwindowList = _repo.GetAll();
+            _campaignwindowList = _manager.GetAll();
             CampaignDatagrid.ItemsSource = null;
             CampaignDatagrid.ItemsSource = _campaignwindowList;
         }
@@ -80,12 +82,11 @@ namespace FEWPFGelzenEnGoedGekeurd
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Campaign campaign= new Campaign();
+            CampaignDto campaign = new();
             campaign.Name= AddCampaignName.Text;
-            campaign.LastUpdate= DateTime.Now;
             campaign.SoortCampagne = _chosenCampaignVal;
 
-            _repo.Add(campaign);
+            _manager.Add(campaign);
             RefreshCampaingListbox();
         }
     }

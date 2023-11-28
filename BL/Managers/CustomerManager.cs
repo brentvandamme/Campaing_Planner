@@ -12,7 +12,7 @@ namespace BL.Managers
 {
     public class CustomerManager : GenericManager<Customer>, ICustomerManager
     {
-        public CustomerManager(IGenericRepository<Customer> repository) : base(repository)
+        public CustomerManager(ICustomerRepository repo) : base(repo)
         {
         }
 

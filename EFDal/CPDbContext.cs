@@ -1,4 +1,5 @@
 ﻿using EFDal.Entities;
+using EFDal.ExtensionMethods_DB;
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
@@ -31,38 +32,19 @@ namespace EFDal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ModelBuilderExtensionProduct.ProductConfig(modelBuilder);
+            ModelBuilderExtensionCampaign.CampaignConfig(modelBuilder);
+            ModelBuilderExtensionCustomer.CustomerConfig(modelBuilder);
+            ModelBuilderExtensionPlanning.PlanningConfig(modelBuilder);
+            ModelBuilderExtensionLocation.LocationConfig(modelBuilder);
             //base.OnModelCreating(modelBuilder);
             //modelBuilder.ApplyConfigurationsFromAssembly(Asse)
-            
+
             //todo eric: opsplitsen marchar max relaties
-            modelBuilder.Entity<Product>()
-                .HasMany(p => p.Campaigns);
 
-            modelBuilder.Entity<Planning>()
-                .HasMany(p => p.Products);
 
-            modelBuilder.Entity<Planning>()
-                .HasOne(l => l.Location);
 
-            modelBuilder.Entity<Planning>()
-                .HasOne(k => k.Customer);
 
-            modelBuilder.Entity<Location>()
-                .Property(l => l.City)
-                .HasConversion<string>()
-                .HasMaxLength(59);
-            modelBuilder.Entity<Location>()
-                .Property(l => l.Zip)
-                .HasConversion<string>()
-                .HasMaxLength(25);
-            modelBuilder.Entity<Location>()
-                .Property(l => l.Number)
-                .HasConversion<string>()
-                .HasMaxLength(10);
-            modelBuilder.Entity<Location>()
-                .Property(l => l.ExtraInfo)
-                .HasConversion<string>()
-                .HasMaxLength(500);
         }
     }
 }

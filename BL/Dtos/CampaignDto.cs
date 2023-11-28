@@ -9,7 +9,7 @@ namespace BL.Dtos
 {
     public class CampaignDto
     {
-        public string name { get; set; }
-        public KindOfCampaign kindOfCampaign { get; set; }
+        public string Name { get; set; }
+        public KindOfCampaign SoortCampagne { get; set; }
     }
 }

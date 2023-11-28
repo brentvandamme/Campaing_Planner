@@ -26,7 +26,7 @@ namespace FEWPFGelzenEnGoedGekeurd
                                        "TrustServerCertificate=True;";
 
             // Add DbContext
-            services.AddDbContext<CPDbContext>(opt => opt.UseSqlServer(connectionString));
+            services.AddDbContext<CPDbContext>(opt => opt.UseSqlServer(connectionString),ServiceLifetime.Transient);
 
             // Repositories
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));

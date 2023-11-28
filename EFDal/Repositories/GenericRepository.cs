@@ -56,5 +56,18 @@ namespace EFDal.Repositories
         {
             _dbContext.SaveChanges();
         }
+
+        public async Task<List<TEntity>> GetAllAsync()
+        {
+            return await _dbSet.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<int> AddAsync(TEntity entity)
+        {
+            entity.LastUpdate = DateTime.Now;
+            _dbSet.Add(entity);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return entity.Id;
+        }
     }
 }

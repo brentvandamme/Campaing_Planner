@@ -10,6 +10,9 @@ namespace EFDal.Entities
     {
         public string Name { get; set; }
         public KindOfCampaign? SoortCampagne { get; set; }
+
+        public int? ProductId { get; set; }
+        public Product? product { get; set; }
     }
 
     public enum KindOfCampaign

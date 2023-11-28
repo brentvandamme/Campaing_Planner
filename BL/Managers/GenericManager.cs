@@ -38,5 +38,15 @@ namespace BL.Managers
         {
             _repository.Delete(id);
         }
+
+        public Task<List<TEntity>> GetAllAsync()
+        {
+            return _repository.GetAllAsync();
+        }
+
+        public Task<int> AddAsync(TEntity entity)
+        {
+           return _repository.AddAsync(entity);
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace BL.Managers.Interfaces
 {
     public interface ICampaignManager : IGenericManager<Campaign>
     {
+        int Add(CampaignDto campaignDto);
     }
 }

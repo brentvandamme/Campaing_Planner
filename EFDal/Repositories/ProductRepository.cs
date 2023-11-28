@@ -17,7 +17,7 @@ namespace EFDal.Repositories
         public List<Product> GetProductsWithFreeSpots()
         {
             return _dbSet
-               .Where(product => product.NBROfFreeSpots != 0)
+               .Where(product => product.MaxAvailableCapacity != 0)
                .ToList();
         }
     }

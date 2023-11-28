@@ -19,5 +19,7 @@ namespace BL.Managers.Interfaces
         void Update(TEntity entity);
 
         void Delete(int id);
+        Task<List<TEntity>> GetAllAsync();
+        Task<int> AddAsync(TEntity entity);
     }
 }

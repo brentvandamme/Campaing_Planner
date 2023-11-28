@@ -1,6 +1,7 @@
 ﻿using BL.Dtos;
 using BL.Managers.Interfaces;
 using EFDal.Entities;
+using EFDal.Repositories;
 using EFDal.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,24 +13,25 @@ namespace BL.Managers
 {
     public class CampaignManager : GenericManager<Campaign>, ICampaignManager
     {
-        public CampaignManager(IGenericRepository<Campaign> repository) : base(repository)
+        ICampaignRepository _repo;
+        public CampaignManager(ICampaignRepository repository) : base(repository)
         {
+            _repo = repository;
         }
         public int Add(CampaignDto entity)
         {
             //todo eric: alle validatie in 1 keer als er 2 probs zijn wil ik het niet 2 * moeten uitvoeren
-            if (entity == null)
+            if (entity == null || entity.Name.Length < 1)
                 throw new ArgumentNullException(nameof(entity));
-            if (entity.name.Length < 1)
-                throw new ArgumentException("name is too short");
 
             //todo eric: automapper
             Campaign campaign = new Campaign();
-            campaign.Name = entity.name;
-            campaign.SoortCampagne = entity.kindOfCampaign;
+            campaign.Name = entity.Name;
+            campaign.SoortCampagne = entity.SoortCampagne;
+            campaign.LastUpdate = DateTime.Now;
 
-
-            return base.Add(campaign);
+            
+            return _repo.Add(campaign);
         }
     }
 }

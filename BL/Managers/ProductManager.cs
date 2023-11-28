@@ -36,7 +36,7 @@ namespace BL.Managers
             float.TryParse(productdto.Price, out price);
 
             product.Price = price;
-            product.NBROfFreeSpots= numberOfFreeSpots;
+            product.MaxAvailableCapacity = numberOfFreeSpots;
             product.Name = productdto.Name;
             product.Campaigns = productdto.Campaigns;
 

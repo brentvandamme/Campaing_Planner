@@ -35,13 +35,15 @@ namespace EFDal.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SoortCampagne")
-                        .HasColumnType("int");
+                    b.Property<string>("SoortCampagne")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -60,15 +62,18 @@ namespace EFDal.Migrations
 
                     b.Property<string>("Company")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
@@ -101,7 +106,8 @@ namespace EFDal.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(75)
+                        .HasColumnType("nvarchar(75)");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -165,31 +171,44 @@ namespace EFDal.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NBROfFreeSpots")
+                    b.Property<int>("MaxAvailableCapacity")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PlanningId")
-                        .HasColumnType("int");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlanningId");
-
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("PlanningProduct", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("planningsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "planningsId");
+
+                    b.HasIndex("planningsId");
+
+                    b.ToTable("PlanningProduct");
                 });
 
             modelBuilder.Entity("EFDal.Entities.Campaign", b =>
                 {
-                    b.HasOne("EFDal.Entities.Product", null)
+                    b.HasOne("EFDal.Entities.Product", "product")
                         .WithMany("Campaigns")
                         .HasForeignKey("ProductId");
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("EFDal.Entities.Planning", b =>
@@ -207,16 +226,19 @@ namespace EFDal.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("EFDal.Entities.Product", b =>
+            modelBuilder.Entity("PlanningProduct", b =>
                 {
-                    b.HasOne("EFDal.Entities.Planning", null)
-                        .WithMany("Products")
-                        .HasForeignKey("PlanningId");
-                });
+                    b.HasOne("EFDal.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("EFDal.Entities.Planning", b =>
-                {
-                    b.Navigation("Products");
+                    b.HasOne("EFDal.Entities.Planning", null)
+                        .WithMany()
+                        .HasForeignKey("planningsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EFDal.Entities.Product", b =>

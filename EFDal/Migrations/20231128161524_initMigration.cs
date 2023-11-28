@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EFDal.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCreateDb : Migration
+    public partial class initMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,9 @@ namespace EFDal.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Company = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -33,7 +33,7 @@ namespace EFDal.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: false),
                     City = table.Column<string>(type: "nvarchar(59)", maxLength: 59, nullable: false),
                     Zip = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -44,6 +44,22 @@ namespace EFDal.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Location", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaxAvailableCapacity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,34 +90,13 @@ namespace EFDal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NBROfFreeSpots = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
-                    PlanningId = table.Column<int>(type: "int", nullable: true),
-                    LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Product_Planning_PlanningId",
-                        column: x => x.PlanningId,
-                        principalTable: "Planning",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Campaigns",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SoortCampagne = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SoortCampagne = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: true),
                     LastUpdate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -113,6 +108,30 @@ namespace EFDal.Migrations
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlanningProduct",
+                columns: table => new
+                {
+                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    planningsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlanningProduct", x => new { x.ProductsId, x.planningsId });
+                    table.ForeignKey(
+                        name: "FK_PlanningProduct_Planning_planningsId",
+                        column: x => x.planningsId,
+                        principalTable: "Planning",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlanningProduct_Product_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -131,9 +150,9 @@ namespace EFDal.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_PlanningId",
-                table: "Product",
-                column: "PlanningId");
+                name: "IX_PlanningProduct_planningsId",
+                table: "PlanningProduct",
+                column: "planningsId");
         }
 
         /// <inheritdoc />
@@ -143,10 +162,13 @@ namespace EFDal.Migrations
                 name: "Campaigns");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "PlanningProduct");
 
             migrationBuilder.DropTable(
                 name: "Planning");
+
+            migrationBuilder.DropTable(
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "Customer");
