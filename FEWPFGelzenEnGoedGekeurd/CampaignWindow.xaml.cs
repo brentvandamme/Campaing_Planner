@@ -36,9 +36,9 @@ namespace FEWPFGelzenEnGoedGekeurd
             RefreshCampaingListbox();
         }
 
-        private void RefreshCampaingListbox()
+        private async void RefreshCampaingListbox()
         {
-            _campaignwindowList = _manager.GetAll();
+            _campaignwindowList = await _manager.GetAllAsync();
             CampaignDatagrid.ItemsSource = null;
             CampaignDatagrid.ItemsSource = _campaignwindowList;
         }
@@ -80,13 +80,13 @@ namespace FEWPFGelzenEnGoedGekeurd
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             CampaignDto campaign = new();
             campaign.Name= AddCampaignName.Text;
             campaign.SoortCampagne = _chosenCampaignVal;
 
-            _manager.Add(campaign);
+            await _manager.AddAsync(campaign);
             RefreshCampaingListbox();
         }
     }

@@ -33,5 +33,18 @@ namespace BL.Managers
             
             return _repo.Add(campaign);
         }
+
+        public async Task<int> AddAsync(CampaignDto campaignDto)
+        {
+            //todo eric: automapper
+            Campaign campaign = new Campaign();
+            campaign.Name = campaignDto.Name;
+            campaign.SoortCampagne = campaignDto.SoortCampagne;
+            campaign.LastUpdate = DateTime.Now;
+
+            int index = await _repo.AddAsync(campaign);
+            return index;
+        }
+
     }
 }

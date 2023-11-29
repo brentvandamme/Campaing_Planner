@@ -12,5 +12,6 @@ namespace EFDal.Repositories.Interfaces
         List<Campaign> GetCampaignByName(string name);
 
         List<Campaign> GetCampaignByKind(KindOfCampaign kindOfCampaign);
+        Task<int> AddAsync(Campaign campaign);
     }
 }
