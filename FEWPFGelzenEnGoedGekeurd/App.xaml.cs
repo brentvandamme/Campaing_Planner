@@ -33,17 +33,20 @@ namespace FEWPFGelzenEnGoedGekeurd
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ICampaignRepository, CampaignRepository>();
             services.AddTransient<IProductRepositrory, ProductRepository>();
+            services.AddTransient<IPlanningRepository, PlanningRepository>();
 
             // Managers
             services.AddTransient(typeof(IGenericManager<>), typeof(GenericManager<>));
             services.AddTransient<ICustomerManager, CustomerManager>();
             services.AddTransient<ICampaignManager, CampaignManager>();
             services.AddTransient<IProductManager, ProductManager>();
+            services.AddTransient<IPlanningManager, PlanningManager>();
 
             // Register the MainWindow with injected ICustomerRepository
             services.AddSingleton<MainWindow>();
             services.AddTransient<CampaignWindow>();
             services.AddTransient<ProductWindow>();
+            services.AddTransient<PlannerWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
 

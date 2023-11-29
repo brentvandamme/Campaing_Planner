@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,44 +11,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BL;
-using BL.Dtos;
-using BL.Managers;
-using BL.Managers.Interfaces;
-using EFDal.Entities;
-using EFDal.Repositories.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FEWPFGelzenEnGoedGekeurd
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for PlannerWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PlannerWindow : Window
     {
-        private ICustomerRepository _repo;
-        private List<Customer> _customerList;
-
-        public MainWindow(ICustomerRepository repo)
+        private string _hourTime;
+        public PlannerWindow()
         {
-            _repo = repo;
             InitializeComponent();
-            _customerList = _repo.GetAll();
-            CustomerDatagrid.ItemsSource= _customerList;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Customer customer = new Customer();
-            customer.FirstName = AddCustomerName.Text;
-            customer.LastName = AddLastName.Text;
-            customer.Company = AddCompanyName.Text;
-
-            _repo.Add(customer);
-        }
-
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {
             var Window = App.ServiceProvider.GetService<MainWindow>();
@@ -80,6 +57,9 @@ namespace FEWPFGelzenEnGoedGekeurd
             this.Hide();
             Window.Show();
         }
+        private void Time_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _hourTime = sender.ToString();
+        }
     }
 }
-

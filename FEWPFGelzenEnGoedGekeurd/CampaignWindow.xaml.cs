@@ -68,7 +68,11 @@ namespace FEWPFGelzenEnGoedGekeurd
         }
         private void NavigateToPlanning(object sender, RoutedEventArgs e)
         {
-
+            var Window = App.ServiceProvider.GetService<PlannerWindow>();
+            Window.Left = this.Left;
+            Window.Top = this.Top;
+            this.Hide();
+            Window.Show();
         }
 
         private void KindOfCampaignsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
