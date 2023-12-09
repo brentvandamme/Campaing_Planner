@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BL.Managers.Interfaces
 {
-    public interface ICustomerManager
+    public interface ICustomerManager : IGenericManager<Customer>
     {
         int Add(CustomerCreationDto customerCreation);
     }

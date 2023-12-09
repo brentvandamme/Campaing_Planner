@@ -20,8 +20,18 @@ namespace EFDal.ExtensionMethods_DB
                .IsRequired(false);
 
 
-            modelBuilder.Entity<Product>()
-                .HasMany(p => p.plannings);
+            modelBuilder.Entity<PlanningProduct>()
+                .HasKey(pp => new { pp.ProductId, pp.PlanningId });
+
+            modelBuilder.Entity<PlanningProduct>()
+                .HasOne(pp => pp.Product)
+                .WithMany(p => p.PlanningProduct)
+                .HasForeignKey(pp => pp.ProductId);
+
+            modelBuilder.Entity<PlanningProduct>()
+                .HasOne(pp => pp.Planning)
+                .WithMany(pl => pl.PlanningProduct)
+                .HasForeignKey(pp => pp.PlanningId);
 
             //properties
             modelBuilder.Entity<Product>()

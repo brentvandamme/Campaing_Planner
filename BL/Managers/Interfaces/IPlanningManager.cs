@@ -9,5 +9,8 @@ namespace BL.Managers.Interfaces
 {
     public interface IPlanningManager : IGenericManager<Planning>
     {
+       Task AddAsync(Planning planning, Customer customer);
+
+        List<Planning> GetAllWithIncludes();
     }
 }

@@ -14,8 +14,8 @@
             <Button Content="Campaign" Click="NavigateToCampaign"/>
             <Button Content="Planning" Click="NavigateToPlanning"/>
         </ToolBar>
-        <DatePicker Name="datePicker" Margin="10,98,941,546" />
-        <ComboBox Grid.Column="0" Name="Hours" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="8" SelectionChanged="Time_SelectionChanged" Margin="12,146,1206,493">
+        <DatePicker Name="datePickerStart" Margin="10,98,941,546" />
+        <ComboBox Grid.Column="0" Name="StartHours" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="8" SelectionChanged="Time_SelectionChanged" Margin="12,146,1206,493">
             <ComboBoxItem Content="6" />
             <ComboBoxItem Content="7" />
             <ComboBoxItem Content="8" />
@@ -30,7 +30,7 @@
             <ComboBoxItem Content="17" />
             <ComboBoxItem Content="18" />
         </ComboBox>
-        <ComboBox Name="Min" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="0" SelectionChanged="Time_SelectionChanged" Margin="89,146,1126,493">
+        <ComboBox Name="StartMin" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="0" SelectionChanged="Time_SelectionChanged" Margin="89,146,1126,493">
             <ComboBoxItem Content="0" />
             <ComboBoxItem Content="10" />
             <ComboBoxItem Content="20" />
@@ -39,13 +39,20 @@
             <ComboBoxItem Content="50" />
         </ComboBox>
 
-        <DataGrid  Margin="670,121,26,86"/>
+        <DataGrid Name="planningDatagrid" Margin="670,98,26,86" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Start Verhuur" Binding="{Binding StartVerhuur}" />
+                <DataGridTextColumn Header="End Verhuur" Binding="{Binding EndVerhuur}" />
+                <DataGridTextColumn Header="Customer First Name" Binding="{Binding Customer.FirstName}" />
+                <DataGridTextColumn Header="Customer Last Name" Binding="{Binding Customer.LastName}" />
+                <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" />
+                <DataGridTextColumn Header="Location Name" Binding="{Binding Location.Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Content="Export to csv" HorizontalAlignment="Left" Margin="670,642,0,0" VerticalAlignment="Top"/>
-        <Label Content="Filter" HorizontalAlignment="Left" Margin="670,72,0,0" VerticalAlignment="Top" Height="23"/>
-        <Button Content="reset" HorizontalAlignment="Left" Margin="789,97,0,0" VerticalAlignment="Top" Height="18"/>
         <Label Content="Start verhuur" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <DatePicker x:Name="datePicker_Copy" Margin="10,277,941,367" />
-        <ComboBox Grid.Column="0" x:Name="Hours_Copy" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="8" SelectionChanged="Time_SelectionChanged" Margin="12,325,1206,314">
+        <DatePicker x:Name="datePickerEnd" Margin="10,277,941,367" />
+        <ComboBox Grid.Column="0" x:Name="EndHour" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="8" SelectionChanged="Time_SelectionChanged" Margin="12,325,1206,314">
             <ComboBoxItem Content="6" />
             <ComboBoxItem Content="7" />
             <ComboBoxItem Content="8" />
@@ -60,7 +67,7 @@
             <ComboBoxItem Content="17" />
             <ComboBoxItem Content="18" />
         </ComboBox>
-        <ComboBox x:Name="Min_Copy" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="0" SelectionChanged="Time_SelectionChanged" Margin="89,325,1126,314">
+        <ComboBox x:Name="EndMin" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="0" SelectionChanged="Time_SelectionChanged" Margin="89,325,1126,314">
             <ComboBoxItem Content="0" />
             <ComboBoxItem Content="10" />
             <ComboBoxItem Content="20" />
@@ -69,7 +76,11 @@
             <ComboBoxItem Content="50" />
         </ComboBox>
         <Label Content="Einde Verhuur" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" FontSize="20"/>
-
+        <Label Content="Planning" HorizontalAlignment="Left" Margin="679,56,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <ListBox Name="ProductListbox" Margin="12,426,1125,23" SelectionChanged="ProductListbox_SelectionChanged" SelectionMode="Multiple"/>
+        <ListBox Name="CustomerListbox" Margin="174,426,963,23" SelectionMode="Single"/>
+        <ListBox Name="LocationListbox" Margin="345,426,792,23"/>
+        <Button Name="AddToPlanningBtn" Content="Add to planning" HorizontalAlignment="Left" Margin="504,642,0,0" VerticalAlignment="Top" Click="AddToPlaningBtn_Click"/>
 
     </Grid>
 </Window>

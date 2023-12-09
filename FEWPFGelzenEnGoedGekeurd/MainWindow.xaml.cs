@@ -27,14 +27,14 @@ namespace FEWPFGelzenEnGoedGekeurd
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ICustomerRepository _repo;
+        private ICustomerManager _manager;
         private List<Customer> _customerList;
 
-        public MainWindow(ICustomerRepository repo)
+        public MainWindow(ICustomerManager manager)
         {
-            _repo = repo;
+            _manager = manager;
             InitializeComponent();
-            _customerList = _repo.GetAll();
+            _customerList = _manager.GetAll();
             CustomerDatagrid.ItemsSource= _customerList;
         }
 
@@ -45,7 +45,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             customer.LastName = AddLastName.Text;
             customer.Company = AddCompanyName.Text;
 
-            _repo.Add(customer);
+            _manager.Add(customer);
         }
 
         private void NavigateToCustomer(object sender, RoutedEventArgs e)

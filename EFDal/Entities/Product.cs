@@ -11,8 +11,13 @@ namespace EFDal.Entities
         //todo eric: berekend veld? 
         public int MaxAvailableCapacity { get; set; }
         public List<Campaign> Campaigns { get; set; }
-        public List<Planning> plannings { get; set; }
+        public List<PlanningProduct> PlanningProduct { get; set; }
         public float Price { get; set; }
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

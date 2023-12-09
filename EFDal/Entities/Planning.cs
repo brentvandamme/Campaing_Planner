@@ -12,7 +12,7 @@ namespace EFDal.Entities
         public DateTime? StartVerhuur { get; set; }
         public DateTime? EndVerhuur { get; set; }
         public Location? Location { get; set; }
-        public List<Product>? Products { get; set; }
+        public List<PlanningProduct> PlanningProduct { get; set; }
         public Customer? Customer { get; set; }
     }
 }

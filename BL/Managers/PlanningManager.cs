@@ -1,5 +1,6 @@
 ﻿using BL.Managers.Interfaces;
 using EFDal.Entities;
+using EFDal.Repositories;
 using EFDal.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,22 @@ namespace BL.Managers
     public class PlanningManager : GenericManager<Planning>, IPlanningManager
     {
         IPlanningRepository _repo;
-        public PlanningManager(IPlanningRepository planningRepository) : base(planningRepository) { 
-        _repo= planningRepository;
+        public PlanningManager(IPlanningRepository planningRepository) : base(planningRepository)
+         { 
+            _repo= planningRepository;
+        }
+        public async Task AddAsync(Planning planning, Customer customer)
+        {
+            await _repo.AddAsync(planning, customer);
+        }
+
+        public async Task<IEnumerable<Planning>> GetAllAsync()
+        {
+            return await _repo.GetAllAsync();
+        }
+        public List<Planning> GetAllWithIncludes()
+        {
+            return _repo.GetAllWithIncludes();
         }
     }
 }
