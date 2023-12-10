@@ -15,11 +15,11 @@ namespace EFDal.Repositories
         {
         }
 
-        public List<Location> GetLocationsByCity(string city)
-        {
-            return _dbSet
-                .Where(location => location.City == city)
-                .ToList();
-        }
+        //public List<Location> GetLocationsByCity(string city)
+        //{
+        //    return _dbSet
+        //        .Where(location => location.City == city)
+        //        .ToList();
+        //}
     }
 }

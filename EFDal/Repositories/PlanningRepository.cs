@@ -26,14 +26,6 @@ namespace EFDal.Repositories
                 .ToList();
         }
 
-        //public async Task<int> AddAsync(Planning planning)
-        //{
-        //    planning.LastUpdate = DateTime.Now;
-        //    _dbContext.Planning.Add(planning);
-        //    await _dbContext.SaveChangesAsync().ConfigureAwait(false);
-        //    return planning.Id;
-        //}
-
         public async Task<IEnumerable<Planning>> GetAllAsync()
         {
             return await _dbContext.Planning.ToListAsync();

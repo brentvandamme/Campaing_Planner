@@ -12,6 +12,7 @@
             <Button Content="Customer" Click="NavigateToCustomer"/>
             <Button Content="Product" Click="NavigateToProduct"/>
             <Button Content="Campaign" Click="NavigateToCampaign"/>
+            <Button Content="Location" Click="NavigateToLocation"/>
             <Button Content="Planning" Click="NavigateToPlanning"/>
         </ToolBar>
         <DatePicker Name="datePickerStart" Margin="10,98,941,546" />

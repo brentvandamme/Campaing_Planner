@@ -1,0 +1,27 @@
+﻿<Window x:Class="FEWPFGelzenEnGoedGekeurd.LocationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FEWPFGelzenEnGoedGekeurd"
+        mc:Ignorable="d"
+        Title="LocationWindow" Height="720" Width="1280">
+    <Grid>
+        <ToolBar Margin="0,0,0,628" RenderTransformOrigin="0.005,0.121">
+            <Button Content="Customer" Click="NavigateToCustomer"/>
+            <Button Content="Product" Click="NavigateToProduct"/>
+            <Button Content="Campaign" Click="NavigateToCampaign"/>
+            <Button Content="Location" Click="NavigateToLocation"/>
+            <Button Content="Planning" Click="NavigateToPlanning"/>
+        </ToolBar>
+        <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="402" Name="AddLocationName" Height="31"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,121,0,0" TextWrapping="Wrap" Text="city" VerticalAlignment="Top" Width="402" Name="AddLocationCity" Height="31"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,157,0,0" TextWrapping="Wrap" Text="Zip" VerticalAlignment="Top" Width="402" Name="AddLocationZip" Height="31"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,193,0,0" TextWrapping="Wrap" Text="Street" VerticalAlignment="Top" Width="402" Name="AddLocationStreet" Height="31"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,229,0,0" TextWrapping="Wrap" Text="Number" VerticalAlignment="Top" Width="402" Name="AddLocationNumber" Height="31"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,229,0,0" TextWrapping="Wrap" Text="Extra info" VerticalAlignment="Top" Width="402" Name="AddLocationExtraInfo" Height="156"/>
+        <Button Content="Add Location" HorizontalAlignment="Left" Margin="10,604,0,0" VerticalAlignment="Top" Click="AddLocationButton_Button_Click" Name="AddLocationButton"/>
+        <DataGrid Name="LocationsDatagrid" Margin="462,113,27,48"></DataGrid>
+
+    </Grid>
+</Window>

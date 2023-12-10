@@ -71,6 +71,14 @@ namespace FEWPFGelzenEnGoedGekeurd
             this.Hide();
             Window.Show();
         }
+        private void NavigateToLocation(object sender, RoutedEventArgs e)
+        {
+            var Window = App.ServiceProvider.GetService<LocationWindow>();
+            Window.Left = this.Left;
+            Window.Top = this.Top;
+            this.Hide();
+            Window.Show();
+        }
         private void Time_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _hourTime = sender.ToString();

@@ -9,7 +9,7 @@ namespace EFDal.Repositories.Interfaces
 {
     public interface ILocationRepository : IGenericRepository<Location>
     {
-        List<Location> GetLocationsByCity(string city);
+        //List<Location> GetLocationsByCity(string city);
 
     }
 }

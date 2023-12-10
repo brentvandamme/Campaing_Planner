@@ -1,7 +1,5 @@
 ﻿using BL.Dtos;
 using BL.Managers.Interfaces;
-using EFDal.Entities;
-using EFDal.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -20,27 +18,15 @@ using System.Windows.Shapes;
 namespace FEWPFGelzenEnGoedGekeurd
 {
     /// <summary>
-    /// Interaction logic for CampaignWindow.xaml
+    /// Interaction logic for LocationWindow.xaml
     /// </summary>
-    public partial class CampaignWindow : Window
+    public partial class LocationWindow : Window
     {
-        private KindOfCampaign _chosenCampaignVal;
-        private ICampaignManager _manager;
-        private List<Campaign> _campaignwindowList;
-
-        public CampaignWindow(ICampaignManager manager)
+        ILocationManager _locationManager;
+        public LocationWindow(ILocationManager locationManager)
         {
-            _manager = manager;
             InitializeComponent();
-            KindOfCampaignsListBox.ItemsSource = Enum.GetValues(typeof(KindOfCampaign));
-            RefreshCampaingListbox();
-        }
-
-        private async void RefreshCampaingListbox()
-        {
-            _campaignwindowList = await _manager.GetAllAsync();
-            CampaignDatagrid.ItemsSource = null;
-            CampaignDatagrid.ItemsSource = _campaignwindowList;
+            _locationManager = locationManager;
         }
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {
@@ -83,23 +69,19 @@ namespace FEWPFGelzenEnGoedGekeurd
             Window.Show();
         }
 
-        private void KindOfCampaignsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (KindOfCampaignsListBox.SelectedItem != null)
-            {
-                KindOfCampaign selectedKind = (KindOfCampaign)KindOfCampaignsListBox.SelectedItem;
-                _chosenCampaignVal = selectedKind;
-            }
-        }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void AddLocationButton_Button_Click(object sender, RoutedEventArgs e)
         {
-            CampaignDto campaign = new();
-            campaign.Name= AddCampaignName.Text;
-            campaign.SoortCampagne = _chosenCampaignVal;
+            LocationCreationDto locationCreationDto = new();
 
-            await _manager.AddAsync(campaign);
-            RefreshCampaingListbox();
+            locationCreationDto.Zip = AddLocationZip.Text;
+            locationCreationDto.City = AddLocationCity.Text;
+            locationCreationDto.Street = AddLocationStreet.Text;
+            locationCreationDto.Number= AddLocationNumber.Text;
+            locationCreationDto.Name= AddLocationName.Text;
+            locationCreationDto.ExtraInfo= AddLocationExtraInfo.Text;
+
+            _locationManager.AddLocation(locationCreationDto);
         }
     }
 }

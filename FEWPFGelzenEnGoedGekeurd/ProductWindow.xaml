@@ -11,6 +11,7 @@
             <Button Content="Customer" Click="NavigateToCustomer"/>
             <Button Content="Product" Click="NavigateToProduct"/>
             <Button Content="Campaign" Click="NavigateToCampaign"/>
+            <Button Content="Location" Click="NavigateToLocation"/>
             <Button Content="Planning" Click="NavigateToPlanning"/>
         </ToolBar> 
         <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddProductName"/>
