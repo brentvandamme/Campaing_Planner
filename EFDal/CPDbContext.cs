@@ -20,12 +20,14 @@ namespace EFDal
         public DbSet<Location> Location { get; set; }
         public DbSet<Planning> Planning { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<PlanningProduct> PlanningProduct { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured) 
             { 
-                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=CampaignPlanner;Integrated Security=True; Trusted_Connection=True; TrustServerCertificate=True;"); 
+                optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=CampaignPlanner;Integrated Security=True; Trusted_Connection=True; TrustServerCertificate=True;")
+                    .EnableSensitiveDataLogging(); 
             }
             
         }

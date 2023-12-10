@@ -122,30 +122,24 @@ namespace FEWPFGelzenEnGoedGekeurd
         private async void AddToPlaningBtn_Click(object sender, RoutedEventArgs e)
         {
             Planning newplanning = new Planning();
-            newplanning.PlanningProduct = new List<PlanningProduct>();
+            List<Product> Products = new();
 
-            //if (ProductListbox.SelectedItems != null && ProductListbox.SelectedItems.Count > 0)
-            //{
-            //    foreach (var selectedItem in ProductListbox.SelectedItems)
-            //    {
-            //        if (selectedItem is Product selectedProduct)
-            //        {
-            //            newplanning.PlanningProduct.Add(new PlanningProduct { Product = selectedProduct });
-            //        }
-            //    }
-            //}
+
+            foreach (var selectedItem in ProductListbox.SelectedItems)
+            {
+                if (selectedItem is Product selectedProduct)
+                {
+                    Products.Add((Product)selectedItem);
+                }
+            }
+
 
             // Get the existing Customer object from the ListBox
             Customer existingCustomer = CustomerListbox.SelectedItem as Customer;
 
-            if (existingCustomer != null)
+            if (existingCustomer == null || ProductListbox.SelectedItems == null)
             {
-                
-            }
-            else
-            {
-                // Handle the case where no customer is selected
-                MessageBox.Show("Please select a customer.");
+                MessageBox.Show("Please select all required fields.");
             }
 
             // Set other properties of newPlanning, StartVerhuur, EndVerhuur, etc.
@@ -153,10 +147,10 @@ namespace FEWPFGelzenEnGoedGekeurd
             newplanning.EndVerhuur = GetSelectedEndTime();
 
             // Add the new Planning object to the DbContext
-            await _planningManager.AddAsync(newplanning, existingCustomer);
+            await _planningManager.AddAsync(newplanning, existingCustomer, Products);
 
             // Refresh the data grid with the updated data
-            planningDatagrid.ItemsSource = _planningManager.GetAll();
+            planningDatagrid.ItemsSource = _planningManager.GetAllWithIncludes();
         }
 
         
