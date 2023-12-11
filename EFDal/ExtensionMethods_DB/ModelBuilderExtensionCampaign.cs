@@ -15,11 +15,13 @@ namespace EFDal.ExtensionMethods_DB
             //properties
             modelBuilder.Entity<Campaign>()
                 .Property(p => p.Name)
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .IsRequired(false);
             modelBuilder.Entity<Campaign>()
                 .Property(p => p.SoortCampagne)
                 .HasConversion<String>()
-                .HasMaxLength(50);
+                .HasMaxLength(50)
+                .IsRequired(false);
 
         }
     }

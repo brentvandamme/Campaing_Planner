@@ -15,13 +15,16 @@ namespace EFDal.ExtensionMethods_DB
             //properties
             modelBuilder.Entity<Customer>()
                 .Property(p => p.FirstName)
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .IsRequired(false);
             modelBuilder.Entity<Customer>()
                 .Property(p => p.LastName)
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .IsRequired(false);
             modelBuilder.Entity<Customer>()
                 .Property(p => p.Company)
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .IsRequired(false);
         }
     }
 }

@@ -10,8 +10,6 @@ namespace BL.Managers.Interfaces
 {
     public interface IProductManager : IGenericManager<Product>
     {
-        Product GetByName(string name);
-
         int Add(ProductAddingDto dto);
     }
 }

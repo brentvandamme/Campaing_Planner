@@ -18,11 +18,6 @@ namespace BL.Managers
             _productRepositrory = repository;
         }
 
-        public Product GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public int Add(ProductAddingDto productdto) {
             Product product = new Product();
 

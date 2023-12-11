@@ -34,18 +34,24 @@ namespace FEWPFGelzenEnGoedGekeurd
         {
             _manager = manager;
             InitializeComponent();
-            _customerList = _manager.GetAll();
-            CustomerDatagrid.ItemsSource= _customerList;
+            RefreshCustomerList();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void RefreshCustomerList()
+        {
+            _customerList = _manager.GetAll();
+            CustomerDatagrid.ItemsSource = _customerList;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             Customer customer = new Customer();
             customer.FirstName = AddCustomerName.Text;
             customer.LastName = AddLastName.Text;
             customer.Company = AddCompanyName.Text;
 
-            _manager.Add(customer);
+            await _manager.AddAsync(customer);
+            RefreshCustomerList();
         }
 
         private void NavigateToCustomer(object sender, RoutedEventArgs e)

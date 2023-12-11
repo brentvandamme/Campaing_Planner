@@ -17,27 +17,27 @@ namespace EFDal.ExtensionMethods_DB
                 .Property(l => l.Name)
                 .HasConversion<string>()
                 .HasMaxLength(75)
-                .IsRequired(false); ;
+                .IsRequired(false);
             modelBuilder.Entity<Location>()
                 .Property(l => l.City)
                 .HasConversion<string>()
                 .HasMaxLength(59)
-                .IsRequired(false); ;
+                .IsRequired(false);
             modelBuilder.Entity<Location>()
                 .Property(l => l.Zip)
                 .HasConversion<string>()
                 .HasMaxLength(25)
-                .IsRequired(false); ;
+                .IsRequired(false);
             modelBuilder.Entity<Location>()
                 .Property(l => l.Number)
                 .HasConversion<string>()
                 .HasMaxLength(10)
-                .IsRequired(false); ;
+                .IsRequired(false);
             modelBuilder.Entity<Location>()
                 .Property(l => l.ExtraInfo)
                 .HasConversion<string>()
                 .HasMaxLength(500)
-                .IsRequired(false); ;
+                .IsRequired(false);
         }
     }
 }

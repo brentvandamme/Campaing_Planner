@@ -36,8 +36,14 @@ namespace EFDal.ExtensionMethods_DB
             //properties
             modelBuilder.Entity<Product>()
                 .Property(p => p.Name)
-                .HasMaxLength(100);
-
+                .HasMaxLength(100)
+                .IsRequired(false);
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .IsRequired(false);
+            modelBuilder.Entity<Product>()
+                .Property(p => p.MaxAvailableCapacity)
+                .IsRequired(false);
 
         }
 

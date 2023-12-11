@@ -8,6 +8,8 @@ using System.Windows;
 using BL.Managers.Interfaces;
 using BL.Managers;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
+using BL.Mappingprofiles;
 
 namespace FEWPFGelzenEnGoedGekeurd
 {
@@ -18,16 +20,17 @@ namespace FEWPFGelzenEnGoedGekeurd
         public App()
         {
             ServiceCollection services = new ServiceCollection();
-            string connectionString = "Data Source=.\\SQLEXPRESS;" +
-            //string connectionString = "Data Source=.;" +
-                                       "Initial Catalog=CampaignPlanner;" +
-                                       "Integrated Security=True; " +
-                                       "Trusted_Connection=True; " +
-                                       "TrustServerCertificate=True;";
+            string connectionString = FEWPFGelzenEnGoedGekeurd.Properties.Settings.Default.Connectionstring;
+            //string connectionString = "Data Source=.\\SQLEXPRESS;" +
+            ////string connectionString = "Data Source=.;" +
+            //                           "Initial Catalog=CampaignPlanner;" +
+            //                           "Integrated Security=True; " +
+            //                           "Trusted_Connection=True; " +
+            //                           "TrustServerCertificate=True;";
 
             // Add DbContext
             services.AddDbContext<CPDbContext>(opt => opt.UseSqlServer(connectionString),ServiceLifetime.Transient);
-
+            services.AddAutoMapper(typeof(MappingProfile));
             // Repositories
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ICustomerRepository, CustomerRepository>();
