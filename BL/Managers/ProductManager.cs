@@ -22,13 +22,8 @@ namespace BL.Managers
             Product product = new Product();
 
             int numberOfFreeSpots = 0;
-            if (!Int32.TryParse(productdto.NBROfFreeSpots, out numberOfFreeSpots))
-            {
-                //validatie iets??
-            }
 
-            float price = 0;
-            float.TryParse(productdto.Price, out price);
+            float price = float.Parse(productdto.Price);
 
             product.Price = price;
             product.MaxAvailableCapacity = numberOfFreeSpots;
