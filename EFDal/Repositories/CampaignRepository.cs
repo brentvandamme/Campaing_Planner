@@ -15,16 +15,13 @@ namespace EFDal.Repositories
         {
         }
 
-        public List<Campaign> GetCampaignByKind(KindOfCampaign kindOfCampaign)
+        public async Task<int> GetNumberOfLinkedCampaignsToProduct(int productId)
         {
-            List<Campaign> result = _dbSet.Where(p => p.SoortCampagne == kindOfCampaign).ToList();
-            return result;
+            // Get the number of campaigns where campaign.productid = productId
+            return await _dbSet
+                .Where(campaign => campaign.ProductId == productId)
+                .CountAsync();
         }
 
-        public List<Campaign> GetCampaignByName(string name)
-        {
-            List<Campaign> result = _dbSet.Where(p => p.Name == name).ToList();
-            return result;
-        }
     }
 }

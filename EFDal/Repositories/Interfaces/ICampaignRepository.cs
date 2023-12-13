@@ -9,9 +9,8 @@ namespace EFDal.Repositories.Interfaces
 {
     public interface ICampaignRepository: IGenericRepository<Campaign>
     {
-        List<Campaign> GetCampaignByName(string name);
-
-        List<Campaign> GetCampaignByKind(KindOfCampaign kindOfCampaign);
         Task<int> AddAsync(Campaign campaign);
+
+        Task<int> GetNumberOfLinkedCampaignsToProduct(int productId);
     }
 }

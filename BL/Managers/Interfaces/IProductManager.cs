@@ -10,6 +10,10 @@ namespace BL.Managers.Interfaces
 {
     public interface IProductManager : IGenericManager<Product>
     {
-        int Add(ProductAddingDto dto);
+        Task<int> AddAsync(ProductAddingDto dto);
+
+        Task<List<Product>> GetAllProductsAsync();
+
+        Task<List<Product>> GetAllProductsWithFreeSpots();
     }
 }

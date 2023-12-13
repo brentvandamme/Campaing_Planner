@@ -29,6 +29,7 @@ namespace FEWPFGelzenEnGoedGekeurd
         private IProductManager _productManager;
         private List<Campaign> availableCampaignsList;
         private List<Campaign> _addedCampaigns;
+        private List<Product> existingProducts;
         public ProductWindow(ICampaignManager campaignManager, IProductManager productManager)
         {
             _campaignManager = campaignManager;
@@ -40,13 +41,14 @@ namespace FEWPFGelzenEnGoedGekeurd
 
         }
 
-        private void RefreshCampaingListbox()
+        private async void RefreshCampaingListbox()
         {
-            availableCampaignsList = _campaignManager.GetAll();
+            availableCampaignsList =await _campaignManager.GetAllAsync();
             AvailableCampaigns.ItemsSource = availableCampaignsList;
             UsedCampaings.ItemsSource = null;
             UsedCampaings.ItemsSource = _addedCampaigns;
-            AllProductsDatagrid.ItemsSource = _productManager.GetAll();
+            existingProducts = await _productManager.GetAllProductsAsync();
+            AllProductsDatagrid.ItemsSource = existingProducts;
             //_campaignwindowList = _campaignRepo.GetAll();
             //CampaignDatagrid.ItemsSource = null;
             //CampaignDatagrid.ItemsSource = _campaignwindowList;
@@ -118,20 +120,56 @@ namespace FEWPFGelzenEnGoedGekeurd
             Window.Show();
         }
 
-        private void AddProductClick(object sender, RoutedEventArgs e)
+        private async void AddProductClick(object sender, RoutedEventArgs e)
         {
             ProductAddingDto productAddingdto = new ProductAddingDto();
             productAddingdto.Price = AddPrice.Text;
-            productAddingdto.NBROfFreeSpots = AddNumberOfFreeSpots.Text;
             productAddingdto.Name = AddProductName.Text;
-           // productAddingdto.Campaigns = _addedCampaigns;
-            //Customer customer = new Customer();
-            //customer.FirstName = AddCustomerName.Text;
-            //customer.LastName = AddLastName.Text;
-            //customer.Company = AddCompanyName.Text;
 
-            //_repo.Add(customer);
-            _productManager.Add(productAddingdto);
+            // Check if AddNumberOfFreeSpots.Text is empty or not a valid number
+            if (string.IsNullOrWhiteSpace(AddNumberOfFreeSpots.Text) || !int.TryParse(AddNumberOfFreeSpots.Text, out int numberOfFreeSpots))
+            {
+                MessageBox.Show("Error: Please enter a valid number for the number of free spots.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            productAddingdto.NBROfFreeSpots = numberOfFreeSpots.ToString();
+
+            if (_addedCampaigns.Count > numberOfFreeSpots)
+            {
+                MessageBox.Show("Error: More campaigns selected than available free spots.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                int productid = await _productManager.AddAsync(productAddingdto);
+
+                if (productid != 0)
+                {
+                    // Retrieve the newly created product
+                    var newProduct = _productManager.GetById(productid);
+
+                    // Link the product to the campaigns
+                    foreach (var campaign in _addedCampaigns)
+                    {
+                        // Set the navigation property
+                        campaign.product = newProduct;
+
+                        // Optionally, set the foreign key if you want to keep it
+                        campaign.ProductId = newProduct.Id;
+
+                        // Update the campaign
+                        _campaignManager.Update(campaign);
+                    }
+                }
+
+                RefreshCampaingListbox();
+                AddPrice.Text = "price";
+                AddNumberOfFreeSpots.Text = "Number Of Free spots";
+                AddProductName.Text = "Name";
+                _addedCampaigns = null;
+            }
         }
+
+
     }
 }

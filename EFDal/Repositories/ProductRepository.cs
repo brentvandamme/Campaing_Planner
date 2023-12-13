@@ -14,11 +14,11 @@ namespace EFDal.Repositories
         {
         }
 
-        public List<Product> GetProductsWithFreeSpots()
-        {
-            return _dbSet
-               .Where(product => product.MaxAvailableCapacity != 0)
-               .ToList();
-        }
+        //public List<Product> GetProductsWithFreeSpots()
+        //{
+        //    return _dbSet
+        //       .Where(product => product.MaxAvailableCapacity != 0)
+        //       .ToList();
+        //}
     }
 }

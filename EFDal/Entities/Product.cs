@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,9 @@ namespace EFDal.Entities
     {
         //todo eric: berekend veld? 
         public int? MaxAvailableCapacity { get; set; }
+
+        [NotMapped]
+        public int? CurrentCapacity { get; set; }
         public List<Campaign> Campaigns { get; set; }
         public List<PlanningProduct> PlanningProduct { get; set; }
         public float? Price { get; set; }

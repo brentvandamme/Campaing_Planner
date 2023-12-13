@@ -34,15 +34,22 @@ namespace FEWPFGelzenEnGoedGekeurd
         public PlannerWindow(ICustomerManager customerManager, IProductManager productManager, IPlanningManager planningmanager, ILocationManager locationManager)
         {
             InitializeComponent();
-            _customerManager= customerManager;
-            _productManager= productManager;
+            _customerManager = customerManager;
+            _productManager = productManager;
             _planningManager = planningmanager;
-            _locationManager= locationManager;
-            ProductListbox.ItemsSource = _productManager.GetAll();
-            CustomerListbox.ItemsSource = _customerManager.GetAll();
-            LocationDatagrid.ItemsSource = _locationManager.GetAll();
-            planningDatagrid.ItemsSource= _planningManager.GetAllWithIncludes();
+            _locationManager = locationManager;
+
+            LoadDataAsync();
         }
+
+        public async Task LoadDataAsync()
+        {
+            ProductListbox.ItemsSource = await _productManager.GetAllProductsWithFreeSpots();
+            CustomerListbox.ItemsSource = await _customerManager.GetAllAsync();
+            LocationDatagrid.ItemsSource = await _locationManager.GetAllAsync();
+            planningDatagrid.ItemsSource =  _planningManager.GetAllWithIncludes();
+        }
+
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {
             var Window = App.ServiceProvider.GetService<MainWindow>();

@@ -10,7 +10,7 @@ namespace BL.Dtos
     public class ProductAddingDto
     {
         public string NBROfFreeSpots { get; set; }
-        public List<Campaign> Campaigns { get; set; }
+        //public List<Campaign> Campaigns { get; set; }
         public string Price { get; set; }
         public string Name { get; set; }
     }
