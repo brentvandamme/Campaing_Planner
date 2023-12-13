@@ -14,6 +14,8 @@ namespace BL.Managers.Interfaces
 
         TEntity GetById(int id);
 
+        Task<TEntity> GetByIdAsync(int id);
+
         int Add(TEntity entity);
 
         void Update(TEntity entity);

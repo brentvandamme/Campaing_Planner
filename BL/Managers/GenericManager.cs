@@ -48,5 +48,10 @@ namespace BL.Managers
         {
            return _repository.AddAsync(entity);
         }
+
+        public Task<TEntity> GetByIdAsync(int id)
+        {
+            return _repository.GetByIdAsync(id);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using BL.Dtos;
 using BL.Managers.Interfaces;
 using EFDal.Entities;
+using Microsoft.EntityFrameworkCore;
 using EFDal.Repositories;
 using EFDal.Repositories.Interfaces;
 using System;
@@ -52,6 +53,16 @@ namespace BL.Managers
 
             int index = await _repo.AddAsync(campaign);
             return index;
+        }
+
+        public async Task<List<Campaign>> GetCampaignsByProductId(int productId)
+        {
+            var campaignsList = _repo
+                .GetAll()
+                .Where(campaign => campaign.ProductId == productId)
+                .ToList();
+
+            return campaignsList;
         }
 
     }

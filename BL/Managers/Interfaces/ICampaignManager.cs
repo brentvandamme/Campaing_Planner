@@ -12,5 +12,6 @@ namespace BL.Managers.Interfaces
     {
         int Add(CampaignDto campaignDto);
         Task<int> AddAsync(CampaignDto campaignDto);
+        Task<List<Campaign>> GetCampaignsByProductId(int productid);
     }
 }

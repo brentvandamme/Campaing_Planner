@@ -75,9 +75,21 @@ namespace FEWPFGelzenEnGoedGekeurd
             //AddProductName.Text;
             //_addedCampaigns;
         }
-        private void AllProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void AllProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (AllProductsDatagrid.SelectedItem is Product selectedProduct)
+            {
+                // Set text fields based on the selected product
+                AddPrice.Text = selectedProduct.Price?.ToString(); // Handle null gracefully if needed
+                AddNumberOfFreeSpots.Text = selectedProduct.MaxAvailableCapacity?.ToString(); // Handle null gracefully if needed
+                AddProductName.Text = selectedProduct.Name;
 
+                // Fetch campaigns linked to the selected product
+                _addedCampaigns = await _campaignManager.GetCampaignsByProductId(selectedProduct.Id);
+
+                // Update the _addedCampaigns listbox
+                RefreshCampaingListbox();
+            }
         }
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {

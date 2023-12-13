@@ -17,10 +17,10 @@ namespace EFDal.Repositories
 
         public async Task<int> GetNumberOfLinkedCampaignsToProduct(int productId)
         {
-            // Get the number of campaigns where campaign.productid = productId
-            return await _dbSet
-                .Where(campaign => campaign.ProductId == productId)
-                .CountAsync();
+            return await Task.Run(() =>
+            {
+                return _dbSet.Count(campaign => campaign.ProductId == productId);
+            });
         }
 
     }

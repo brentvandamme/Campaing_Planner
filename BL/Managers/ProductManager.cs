@@ -37,28 +37,20 @@ namespace BL.Managers
 
         public async Task<int> GetProductCapacity(int id)
         {
-            //get product with id
-            Product product = _productRepositrory.GetById(id);
-            // get number of campaigns with that id
-            int numOfCapaignsLinkedToProduct = await _campaignRepository.GetNumberOfLinkedCampaignsToProduct(id);
-            //maxcap - num of campaigns --> free spots
-            int currentCap = (int)(product.MaxAvailableCapacity - numOfCapaignsLinkedToProduct);
-
+            Product product = await _productRepositrory.GetByIdAsync(id);
+            int numOfCampaignsLinkedToProduct = await _campaignRepository.GetNumberOfLinkedCampaignsToProduct(id);
+            int currentCap = (int)(product.MaxAvailableCapacity - numOfCampaignsLinkedToProduct);
             return currentCap;
         }
 
         public virtual async Task<List<Product>> GetAllProductsAsync()
         {
-            List<Product> products = _productRepositrory.GetAll();
+            List<Product> products =await _productRepositrory.GetAllAsync();
 
-            // Create a list of tasks to get all cpacity data at the same time
-            var capacityTasks = products.Select(async item =>
+            foreach (var item in products)
             {
                 item.CurrentCapacity = await GetProductCapacity(item.Id);
-            });
-
-            // Wait for all tasks to complete
-            await Task.WhenAll(capacityTasks);
+            }
 
             return products;
         }
@@ -67,16 +59,13 @@ namespace BL.Managers
         {
             List<Product> products = await GetAllProductsAsync();
 
-            // Create a list of tasks to get all capacity data at the same time
             var capacityTasks = products.Select(async item =>
             {
                 item.CurrentCapacity = await GetProductCapacity(item.Id);
             });
 
-            // Wait for all tasks to complete
             await Task.WhenAll(capacityTasks);
 
-            // Filter products with available capacity
             var productsWithFreeSpots = products.Where(item => item.CurrentCapacity > 0).ToList();
 
             return productsWithFreeSpots;
