@@ -1,6 +1,8 @@
-﻿using BL.Dtos;
+﻿using AutoMapper;
+using BL.Dtos;
 using BL.Managers.Interfaces;
 using EFDal.Entities;
+using EFDal.Repositories;
 using EFDal.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,12 @@ namespace BL.Managers
     {
         IProductRepositrory _productRepositrory;
         ICampaignRepository _campaignRepository;
-        public ProductManager(IProductRepositrory repository, ICampaignRepository campaignRepository) : base(repository)
+        IMapper _mapper;
+        public ProductManager(IProductRepositrory repository, ICampaignRepository campaignRepository, IMapper mapper) : base(repository)
         {
             _productRepositrory = repository;
             _campaignRepository = campaignRepository;
+            _mapper = mapper;
         }
 
         public async Task<int> AddAsync(ProductAddingDto productdto) {
@@ -26,7 +30,7 @@ namespace BL.Managers
             int numberOfFreeSpots = 0;
 
             float price = float.Parse(productdto.Price);
-            int maxCapacity = Int32.Parse(productdto.NBROfFreeSpots);
+            int maxCapacity = productdto.MaxAvailableCapacity;
             product.Price = price;
             product.MaxAvailableCapacity = maxCapacity;
             product.Name = productdto.Name;
@@ -39,7 +43,12 @@ namespace BL.Managers
         {
             Product product = await _productRepositrory.GetByIdAsync(id);
             int numOfCampaignsLinkedToProduct = await _campaignRepository.GetNumberOfLinkedCampaignsToProduct(id);
-            int currentCap = (int)(product.MaxAvailableCapacity - numOfCampaignsLinkedToProduct);
+            int currentCap = 0;
+            if (product.MaxAvailableCapacity>=0)
+            {
+                currentCap = (int)(product.MaxAvailableCapacity - numOfCampaignsLinkedToProduct);
+            }
+            
             return currentCap;
         }
 
@@ -68,6 +77,19 @@ namespace BL.Managers
             }
 
             return productsWithCapacity;
+        }
+
+        public void Update(ProductAddingDto dto)
+        {
+            Product prod = _mapper.Map<Product>(dto);
+            _repository.Update(prod);
+        }
+
+
+        public async Task UpdateAsync(ProductAddingDto dto)
+        {
+            Product prod = _mapper.Map<Product>(dto);
+            await _productRepositrory.UpdateAsync(prod);
         }
     }
 }

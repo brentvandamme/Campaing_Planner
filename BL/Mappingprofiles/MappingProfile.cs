@@ -18,6 +18,8 @@ namespace BL.Mappingprofiles
             CreateMap<CampaignDto, Campaign>();
 
             CreateMap<CustomerCreationDto, Customer>();
+
+            CreateMap<ProductAddingDto, Product>();
         }
     }
 }

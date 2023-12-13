@@ -30,6 +30,7 @@ namespace FEWPFGelzenEnGoedGekeurd
         private List<Campaign> availableCampaignsList;
         private List<Campaign> _addedCampaigns;
         private List<Product> existingProducts;
+        private int lastSelectedProductId = -1;
         public ProductWindow(ICampaignManager campaignManager, IProductManager productManager)
         {
             _campaignManager = campaignManager;
@@ -79,15 +80,13 @@ namespace FEWPFGelzenEnGoedGekeurd
         {
             if (AllProductsDatagrid.SelectedItem is Product selectedProduct)
             {
-                // Set text fields based on the selected product
-                AddPrice.Text = selectedProduct.Price?.ToString(); // Handle null gracefully if needed
-                AddNumberOfFreeSpots.Text = selectedProduct.MaxAvailableCapacity?.ToString(); // Handle null gracefully if needed
+                AddPrice.Text = selectedProduct.Price?.ToString(); 
+                AddNumberOfFreeSpots.Text = selectedProduct.MaxAvailableCapacity?.ToString();
                 AddProductName.Text = selectedProduct.Name;
+                lastSelectedProductId = selectedProduct.Id; 
 
-                // Fetch campaigns linked to the selected product
                 _addedCampaigns = await _campaignManager.GetCampaignsByProductId(selectedProduct.Id);
 
-                // Update the _addedCampaigns listbox
                 RefreshCampaingListbox();
             }
         }
@@ -145,7 +144,7 @@ namespace FEWPFGelzenEnGoedGekeurd
                 return;
             }
 
-            productAddingdto.NBROfFreeSpots = numberOfFreeSpots.ToString();
+            productAddingdto.MaxAvailableCapacity = numberOfFreeSpots;
 
             if (_addedCampaigns.Count > numberOfFreeSpots)
             {
@@ -182,6 +181,48 @@ namespace FEWPFGelzenEnGoedGekeurd
             }
         }
 
+        private async void UpdateProductClick(object sender, RoutedEventArgs e)
+        {
+            
+            if (lastSelectedProductId >=0)
+            {
+                ProductAddingDto productAddingdto = new ProductAddingDto();
+                productAddingdto.Price = AddPrice.Text;
+                productAddingdto.Name = AddProductName.Text;
+                productAddingdto.Id = lastSelectedProductId;
+                productAddingdto.MaxAvailableCapacity = Int32.Parse(AddNumberOfFreeSpots.Text);
 
+                // Check if AddNumberOfFreeSpots.Text is empty or not a valid number
+                if (string.IsNullOrWhiteSpace(AddNumberOfFreeSpots.Text) || !int.TryParse(AddNumberOfFreeSpots.Text, out int numberOfFreeSpots))
+                {
+                    MessageBox.Show("Error: Please enter a valid number for the number of free spots.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (_addedCampaigns.Count > numberOfFreeSpots)
+                {
+                    MessageBox.Show("Error: More campaigns selected than available free spots.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+               await _productManager.UpdateAsync(productAddingdto);
+                Product newProduct = await _productManager.GetByIdAsync(lastSelectedProductId);
+                foreach (var campaign in _addedCampaigns)
+                {
+                    // Set the navigation property
+                    campaign.product = newProduct;
+
+                    // Optionally, set the foreign key if you want to keep it
+                    campaign.ProductId = newProduct.Id;
+
+                    // Update the campaign
+                    _campaignManager.Update(campaign);
+                }
+                RefreshCampaingListbox();
+                AddPrice.Text = "price";
+                AddNumberOfFreeSpots.Text = "Number Of Free spots";
+                AddProductName.Text = "Name";
+                _addedCampaigns = null;
+            }
+        }
     }
 }

@@ -15,5 +15,9 @@ namespace BL.Managers.Interfaces
         Task<List<Product>> GetAllProductsAsync();
 
         Task<List<Product>> GetAllProductsWithFreeSpots();
+
+        void Update(ProductAddingDto dto);
+
+        Task UpdateAsync(ProductAddingDto dto);
     }
 }
