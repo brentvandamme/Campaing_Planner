@@ -58,17 +58,16 @@ namespace BL.Managers
         public async Task<List<Product>> GetAllProductsWithFreeSpots()
         {
             List<Product> products = await GetAllProductsAsync();
-
-            var capacityTasks = products.Select(async item =>
+            List<Product> productsWithCapacity = new();
+            foreach (var item in products)
             {
-                item.CurrentCapacity = await GetProductCapacity(item.Id);
-            });
+                if (item.CurrentCapacity > 0)
+                {
+                    productsWithCapacity.Add(item);
+                }
+            }
 
-            await Task.WhenAll(capacityTasks);
-
-            var productsWithFreeSpots = products.Where(item => item.CurrentCapacity > 0).ToList();
-
-            return productsWithFreeSpots;
+            return productsWithCapacity;
         }
     }
 }
