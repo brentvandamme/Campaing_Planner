@@ -106,7 +106,6 @@ namespace FEWPFGelzenEnGoedGekeurd
             int selectedHour = Convert.ToInt32(((ComboBoxItem)StartHours.SelectedItem).Content);
             int selectedMinute = Convert.ToInt32(((ComboBoxItem)StartMin.SelectedItem).Content);
 
-            // Create a new DateTime object with the selected date, hour, and minute
             DateTime selectedStartDateTime = new DateTime(
                 startTime.Year,
                 startTime.Month,
@@ -125,7 +124,6 @@ namespace FEWPFGelzenEnGoedGekeurd
             int selectedHour = Convert.ToInt32(((ComboBoxItem)EndHour.SelectedItem).Content);
             int selectedMinute = Convert.ToInt32(((ComboBoxItem)EndMin.SelectedItem).Content);
 
-            // Create a new DateTime object with the selected date, hour, and minute
             DateTime selectedendDateTime = new DateTime(
                 endTime.Year,
                 endTime.Month,

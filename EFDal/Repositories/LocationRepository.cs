@@ -14,12 +14,5 @@ namespace EFDal.Repositories
         public LocationRepository(CPDbContext dbContext) : base(dbContext)
         {
         }
-
-        //public List<Location> GetLocationsByCity(string city)
-        //{
-        //    return _dbSet
-        //        .Where(location => location.City == city)
-        //        .ToList();
-        //}
     }
 }

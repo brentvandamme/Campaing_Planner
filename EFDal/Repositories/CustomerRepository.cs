@@ -1,4 +1,5 @@
-﻿using EFDal.Entities;
+﻿using Dapper;
+using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,28 +12,22 @@ namespace EFDal.Repositories
 {
     public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
+        CPDbContext _dbContext;
         public CustomerRepository(CPDbContext dbContext) : base(dbContext)
         {
+            _dbContext = dbContext;
         }
-        public List<Customer> GetCustomersByName(string name)
+        public async Task DeleteAsync(int customerId)
         {
-            return _dbSet
-                .Where(customer => customer.FirstName == name)
-                .ToList();
+            string sql = "DELETE FROM Customer WHERE Id = @CustomerId";
+            await _dbContext.Database.GetDbConnection().ExecuteAsync(sql, new { CustomerId = customerId });
         }
 
-        public List<Customer> GetCustomersByLastName(string lastName)
+        public async Task UpdateAsync(Customer customer)
         {
-            return _dbSet
-                .Where(customer => customer.LastName == lastName)
-                .ToList();
+            string sql = "UPDATE Customer SET FirstName = @FirstName, LastName = @LastName, Company = @Company WHERE Id = @Id";
+            await _dbContext.Database.GetDbConnection().ExecuteAsync(sql, customer);
         }
 
-        public List<Customer> GetCustomersByCompany(string company)
-        {
-            return _dbSet
-                .Where(customer => customer.Company == company)
-                .ToList();
-        }
     }
 }

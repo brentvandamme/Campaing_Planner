@@ -9,7 +9,7 @@ namespace EFDal
     {
         public CPDbContext() : base()
         {
-        
+
         }
         public CPDbContext(DbContextOptions<CPDbContext> options) : base(options) //***
         {
@@ -24,12 +24,12 @@ namespace EFDal
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured) 
-            { 
+            if (!optionsBuilder.IsConfigured)
+            {
                 optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=CampaignPlanner;Integrated Security=True; Trusted_Connection=True; TrustServerCertificate=True;")
-                    .EnableSensitiveDataLogging(); 
+                    .EnableSensitiveDataLogging();
             }
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,13 +39,6 @@ namespace EFDal
             ModelBuilderExtensionCustomer.CustomerConfig(modelBuilder);
             ModelBuilderExtensionPlanning.PlanningConfig(modelBuilder);
             ModelBuilderExtensionLocation.LocationConfig(modelBuilder);
-            //base.OnModelCreating(modelBuilder);
-            //modelBuilder.ApplyConfigurationsFromAssembly(Asse)
-
-            //todo eric: opsplitsen marchar max relaties
-
-
-
 
         }
     }

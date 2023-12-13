@@ -9,8 +9,6 @@ namespace EFDal.Repositories.Interfaces
 {
     public interface IProductRepositrory : IGenericRepository<Product>
     {
-        //List<Product> GetProductsWithFreeSpots();
         Task UpdateAsync(Product product);
-
     }
 }

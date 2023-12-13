@@ -5,20 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FEWPFGelzenEnGoedGekeurd"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1280">
     <Grid>
         <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCustomerName"/>
         <TextBox HorizontalAlignment="Left" Margin="10,104,0,0" TextWrapping="Wrap" Text="last name" VerticalAlignment="Top" Width="232" Name="AddLastName"/>
         <TextBox HorizontalAlignment="Left" Margin="10,127,0,0" TextWrapping="Wrap" Text="company" VerticalAlignment="Top" Width="232" Name="AddCompanyName"/>
         <Button Content="Add Customer" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Click="Button_Click" Name="AddCustomerBtn"/>
-        <DataGrid Name="CustomerDatagrid" Margin="347,113,27,48" CanUserAddRows="False"></DataGrid>
-        <ToolBar Margin="0,0,0,380" RenderTransformOrigin="0.005,0.121">
+        <DataGrid Name="CustomerDatagrid" Margin="347,74,27,87" CanUserAddRows="False" SelectionChanged="CustomerDatagrid_SelectionChanged"></DataGrid>
+        <ToolBar Margin="0,0,0,635" RenderTransformOrigin="0.005,0.121">
             <Button Content="Customer" Click="NavigateToCustomer"/>
             <Button Content="Product" Click="NavigateToProduct"/>
             <Button Content="Campaign" Click="NavigateToCampaign"/>
             <Button Content="Location" Click="NavigateToLocation"/>
             <Button Content="Planning" Click="NavigateToPlanning"/>
         </ToolBar>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="347,622,0,0" VerticalAlignment="Top" Name="DeleteBtn" Click="DeleteBtn_Click" Height="33" Width="89"/>
+        <Button Content="Update" HorizontalAlignment="Left" Margin="126,150,0,0" VerticalAlignment="Top" Name="UpdateBtn" Click="UpdateBtn_Click"/>
 
     </Grid>
 </Window>

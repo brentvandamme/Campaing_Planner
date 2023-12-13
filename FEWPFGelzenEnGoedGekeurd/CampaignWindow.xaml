@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FEWPFGelzenEnGoedGekeurd"
         mc:Ignorable="d"
-        Title="CampaignWindow" Height="450" Width="800">
+        Title="CampaignWindow" Height="720" Width="1280">
     <Grid>
-        <ToolBar Margin="0,0,0,380" RenderTransformOrigin="0.005,0.121">
+        <ToolBar Margin="0,0,0,628" RenderTransformOrigin="0.005,0.121">
             <Button Content="Customer" Click="NavigateToCustomer"/>
             <Button Content="Product" Click="NavigateToProduct"/>
             <Button Content="Campaign" Click="NavigateToCampaign"/>
@@ -17,6 +17,6 @@
         <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCampaignName"/>
         <Button Content="Add Campaign" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Click="Button_Click" Name="AddCampaignButton"/>
         <DataGrid Name="CampaignDatagrid" Margin="347,113,27,48" CanUserAddRows="False"></DataGrid>
-        <ListBox Name="KindOfCampaignsListBox" Margin="10,107,558,246" SelectionChanged="KindOfCampaignsListBox_SelectionChanged"/>
+        <ListBox Name="KindOfCampaignsListBox" Margin="10,107,1038,466" SelectionChanged="KindOfCampaignsListBox_SelectionChanged"/>
     </Grid>
 </Window>

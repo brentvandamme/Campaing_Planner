@@ -24,18 +24,8 @@ namespace BL.Managers
         }
         public int Add(CampaignDto campaignDto)
         {
-            //todo eric: alle validatie in 1 keer als er 2 probs zijn wil ik het niet 2 * moeten uitvoeren
             if (campaignDto == null || campaignDto.Name.Length < 1)
                 throw new ArgumentNullException(nameof(campaignDto));
-
-            //todo eric: automapper
-            //Campaign campaign = new Campaign();
-            //campaign.Name = entity.Name;
-            //campaign.SoortCampagne = entity.SoortCampagne;
-            //campaign.LastUpdate = DateTime.Now;
-
-            
-            //return _repo.Add(campaign);
 
             Campaign campaign = _mapper.Map<Campaign>(campaignDto);
 
@@ -44,11 +34,6 @@ namespace BL.Managers
 
         public async Task<int> AddAsync(CampaignDto campaignDto)
         {
-            //todo eric: automapper
-            //Campaign campaign = new Campaign();
-            //campaign.Name = campaignDto.Name;
-            //campaign.SoortCampagne = campaignDto.SoortCampagne;
-            //campaign.LastUpdate = DateTime.Now;
             Campaign campaign = _mapper.Map<Campaign>(campaignDto);
 
             int index = await _repo.AddAsync(campaign);

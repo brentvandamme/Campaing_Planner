@@ -23,17 +23,7 @@ namespace BL.Managers
         }
 
         public async Task<int> AddLocationAsync(LocationCreationDto locDto)
-        {
-            //todo - automapper
-            //Location loc = new();
-            //loc.Street = locDto.Street;
-            //loc.City = locDto.City;
-            //loc.Number = locDto.Number;
-            //loc.ExtraInfo = locDto.ExtraInfo;
-            //loc.Name= locDto.Name;
-            //loc.Zip= locDto.Zip;
-            //return _locRepo.Add(loc);
-
+        { 
             Location loc = _mapper.Map<Location>(locDto);
 
             return await _locRepo.AddAsync(loc);

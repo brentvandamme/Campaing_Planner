@@ -42,15 +42,22 @@ namespace BL.Managers
         public async Task<int> GetProductCapacity(int id)
         {
             Product product = await _productRepositrory.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                return 0;
+            }
+
             int numOfCampaignsLinkedToProduct = await _campaignRepository.GetNumberOfLinkedCampaignsToProduct(id);
             int currentCap = 0;
-            if (product.MaxAvailableCapacity>=0)
+            if (product.MaxAvailableCapacity >= 0)
             {
                 currentCap = (int)(product.MaxAvailableCapacity - numOfCampaignsLinkedToProduct);
             }
-            
+
             return currentCap;
         }
+
 
         public virtual async Task<List<Product>> GetAllProductsAsync()
         {

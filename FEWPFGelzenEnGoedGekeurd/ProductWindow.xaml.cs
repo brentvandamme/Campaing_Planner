@@ -141,7 +141,12 @@ namespace FEWPFGelzenEnGoedGekeurd
 
         private async void AddProductClick(object sender, RoutedEventArgs e)
         {
-            ProductAddingDto productAddingdto = new ProductAddingDto();
+            if (lastSelectedProductId >= 0)
+            {
+                MessageBox.Show("Error: Can not add an existing product, update it if you want to change it.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+                ProductAddingDto productAddingdto = new ProductAddingDto();
             productAddingdto.Price = AddPrice.Text;
             productAddingdto.Name = AddProductName.Text;
 
@@ -164,19 +169,14 @@ namespace FEWPFGelzenEnGoedGekeurd
 
                 if (productid != 0)
                 {
-                    // Retrieve the newly created product
                     var newProduct = _productManager.GetById(productid);
 
-                    // Link the product to the campaigns
                     foreach (var campaign in _addedCampaigns)
                     {
-                        // Set the navigation property
                         campaign.product = newProduct;
 
-                        // Optionally, set the foreign key if you want to keep it
                         campaign.ProductId = newProduct.Id;
 
-                        // Update the campaign
                         _campaignManager.Update(campaign);
                     }
                 }

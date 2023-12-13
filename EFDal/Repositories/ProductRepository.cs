@@ -18,26 +18,16 @@ namespace EFDal.Repositories
             _dbContext = dbContext;
         }
 
-        //public List<Product> GetProductsWithFreeSpots()
-        //{
-        //    return _dbSet
-        //       .Where(product => product.MaxAvailableCapacity != 0)
-        //       .ToList();
-        //}
         public async Task UpdateAsync(Product product)
         {
             var existingProduct = await GetByIdAsync(product.Id);
 
             if (existingProduct != null)
             {
-                // Update properties of the existing product
                 existingProduct.Price = product.Price;
                 existingProduct.MaxAvailableCapacity = product.MaxAvailableCapacity;
                 existingProduct.Name = product.Name;
 
-                // Update other properties as needed
-
-                // Save changes to the database
                 await _dbContext.SaveChangesAsync();
             }
             else

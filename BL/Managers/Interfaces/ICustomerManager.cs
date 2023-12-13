@@ -11,5 +11,8 @@ namespace BL.Managers.Interfaces
     public interface ICustomerManager : IGenericManager<Customer>
     {
         int Add(CustomerCreationDto customerCreation);
+        Task DeleteCustomerByIdAsync(int customerId);
+
+        Task UpdateCustomerAsync(Customer customer);
     }
 }

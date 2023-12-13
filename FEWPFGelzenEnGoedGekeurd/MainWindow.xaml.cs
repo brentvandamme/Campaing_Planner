@@ -94,6 +94,38 @@ namespace FEWPFGelzenEnGoedGekeurd
             this.Hide();
             Window.Show();
         }
+
+        private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CustomerDatagrid.SelectedItem is Customer selectedCustomer)
+            {
+                await _manager.DeleteCustomerByIdAsync(selectedCustomer.Id);
+                RefreshCustomerList();
+            }
+        }
+
+        private void CustomerDatagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CustomerDatagrid.SelectedItem is Customer selectedCustomer)
+            {
+                AddCustomerName.Text = selectedCustomer.FirstName;
+                AddLastName.Text = selectedCustomer.LastName;
+                AddCompanyName.Text = selectedCustomer.Company;
+            }
+        }
+
+        private async void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (CustomerDatagrid.SelectedItem is Customer selectedCustomer)
+            {
+                selectedCustomer.FirstName = AddCustomerName.Text;
+                selectedCustomer.LastName = AddLastName.Text;
+                selectedCustomer.Company = AddCompanyName.Text;
+
+                await _manager.UpdateCustomerAsync(selectedCustomer);
+                RefreshCustomerList();
+            }
+        }
     }
 }
 
