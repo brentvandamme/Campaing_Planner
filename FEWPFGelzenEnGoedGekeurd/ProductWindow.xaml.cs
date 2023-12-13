@@ -58,8 +58,16 @@ namespace FEWPFGelzenEnGoedGekeurd
         private void AddCampaignBtnClick(object sender, RoutedEventArgs e)
         {
             Campaign campaign = (Campaign)AvailableCampaigns.SelectedItem;
-            _addedCampaigns.Add(campaign);
-            RefreshCampaingListbox();
+
+            if (!_addedCampaigns.Any(c => c.Id == campaign.Id))
+            {
+                _addedCampaigns.Add(campaign);
+                RefreshCampaingListbox();
+            }
+            else
+            {
+                MessageBox.Show("Campaign with the same ID is already added.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void RemoveCampaignBtnClick(object sender, RoutedEventArgs e)
@@ -215,7 +223,7 @@ namespace FEWPFGelzenEnGoedGekeurd
                     campaign.ProductId = newProduct.Id;
 
                     // Update the campaign
-                    _campaignManager.Update(campaign);
+                   await _campaignManager.UpdateAsync(campaign);
                 }
                 RefreshCampaingListbox();
                 AddPrice.Text = "price";

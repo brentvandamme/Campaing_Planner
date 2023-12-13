@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EFDal.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace EFDal.Repositories.Interfaces
         int Add(TEntity entity);
         Task<int> AddAsync(TEntity entity);
         void Update(TEntity entity);
+        Task UpdateAsync(TEntity entity);
         void Delete(int id);
         void SaveChanges();
     }

@@ -74,5 +74,12 @@ namespace EFDal.Repositories
         {
             return await _dbSet.FirstOrDefaultAsync(db => db.Id == id);
         }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            entity.LastUpdate = DateTime.Now;
+            _dbSet.Update(entity);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

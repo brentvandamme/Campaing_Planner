@@ -1,5 +1,6 @@
 ﻿using BL.Managers.Interfaces;
 using EFDal.Entities;
+using EFDal.Repositories;
 using EFDal.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,11 @@ namespace BL.Managers
         public Task<TEntity> GetByIdAsync(int id)
         {
             return _repository.GetByIdAsync(id);
+        }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            await _repository.UpdateAsync(entity);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EFDal.Entities;
+﻿using BL.Dtos;
+using EFDal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace BL.Managers.Interfaces
         void Delete(int id);
         Task<List<TEntity>> GetAllAsync();
         Task<int> AddAsync(TEntity entity);
+
+        Task UpdateAsync(TEntity entity);
     }
 }
