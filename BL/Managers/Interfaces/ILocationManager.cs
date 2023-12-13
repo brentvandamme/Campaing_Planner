@@ -10,6 +10,6 @@ namespace BL.Managers.Interfaces
 {
     public interface ILocationManager : IGenericManager<Location>
     {
-        int AddLocation(LocationCreationDto locDto);
+        Task<int> AddLocationAsync(LocationCreationDto locDto);
     }
 }

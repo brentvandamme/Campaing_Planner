@@ -17,9 +17,9 @@ namespace BL.Managers
          { 
             _repo= planningRepository;
         }
-        public async Task AddAsync(Planning planning, Customer customer, List<Product> Product)
+        public async Task AddAsync(Planning planning, Customer customer, List<Product> Product, Location loc)
         {
-            await _repo.AddAsync(planning, customer, Product);
+            await _repo.AddAsync(planning, customer, Product, loc);
         }
 
         public async Task<IEnumerable<Planning>> GetAllAsync()

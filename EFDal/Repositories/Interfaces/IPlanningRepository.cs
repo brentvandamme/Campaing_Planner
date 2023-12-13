@@ -11,7 +11,7 @@ namespace EFDal.Repositories.Interfaces
     {
         List<Planning> GetPlanningByTimeSpan(DateTime dateTime, DateTime endTime);
 
-        Task<int> AddAsync(Planning planning, Customer cust, List<Product> Product);
+        Task<int> AddAsync(Planning planning, Customer cust, List<Product> Product, Location loc);
 
         List<Planning> GetAllWithIncludes();
     }

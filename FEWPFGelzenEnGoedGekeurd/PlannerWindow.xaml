@@ -63,7 +63,7 @@
                 <DataGridTextColumn Header="Location Name" Binding="{Binding Location.Name}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Export to csv" HorizontalAlignment="Left" Margin="1182,666,0,0" VerticalAlignment="Top"/>
+        <Button Content="Export to csv" HorizontalAlignment="Left" Margin="1182,656,0,0" VerticalAlignment="Top"/>
         <Label Content="Start verhuur" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" FontSize="20"/>
         <DatePicker x:Name="datePickerEnd" Margin="10,277,941,367" />
         <ComboBox Grid.Column="0" x:Name="EndHour" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="8" SelectionChanged="Time_SelectionChanged" Margin="12,325,1206,314">
@@ -93,8 +93,15 @@
         <Label Content="Planning" HorizontalAlignment="Left" Margin="549,56,0,0" VerticalAlignment="Top" FontSize="20"/>
         <ListBox Name="ProductListbox" Margin="12,426,1125,23" SelectionChanged="ProductListbox_SelectionChanged" SelectionMode="Multiple"/>
         <ListBox Name="CustomerListbox" Margin="174,426,963,23" SelectionMode="Single"/>
-        <ListBox Name="LocationListbox" Margin="345,426,792,23"/>
-        <Button Name="AddToPlanningBtn" Content="Add to planning" HorizontalAlignment="Left" Margin="502,661,0,0" VerticalAlignment="Top" Click="AddToPlaningBtn_Click"/>
+        <DataGrid Name="LocationDatagrid" Margin="345,426,745,23" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Location" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="City" Binding="{Binding City}" />
+                <DataGridTextColumn Header="Street" Binding="{Binding Street}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Name="AddToPlanningBtn" Content="Add to planning" HorizontalAlignment="Left" Margin="550,656,0,0" VerticalAlignment="Top" Click="AddToPlaningBtn_Click"/>
 
     </Grid>
 </Window>

@@ -16,7 +16,7 @@
         </ToolBar>
         <TextBox HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="232" Name="AddCampaignName"/>
         <Button Content="Add Campaign" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Click="Button_Click" Name="AddCampaignButton"/>
-        <DataGrid Name="CampaignDatagrid" Margin="347,113,27,48"></DataGrid>
+        <DataGrid Name="CampaignDatagrid" Margin="347,113,27,48" CanUserAddRows="False"></DataGrid>
         <ListBox Name="KindOfCampaignsListBox" Margin="10,107,558,246" SelectionChanged="KindOfCampaignsListBox_SelectionChanged"/>
     </Grid>
 </Window>

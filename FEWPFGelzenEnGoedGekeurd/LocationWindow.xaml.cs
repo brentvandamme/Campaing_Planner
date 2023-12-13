@@ -27,6 +27,12 @@ namespace FEWPFGelzenEnGoedGekeurd
         {
             InitializeComponent();
             _locationManager = locationManager;
+            RefreshDatagrid();
+        }
+
+        private async void RefreshDatagrid()
+        {
+            LocationsDatagrid.ItemsSource = await _locationManager.GetAllAsync();
         }
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {
@@ -70,7 +76,7 @@ namespace FEWPFGelzenEnGoedGekeurd
         }
 
 
-        private void AddLocationButton_Button_Click(object sender, RoutedEventArgs e)
+        private async void AddLocationButton_Button_Click(object sender, RoutedEventArgs e)
         {
             LocationCreationDto locationCreationDto = new();
 
@@ -81,7 +87,8 @@ namespace FEWPFGelzenEnGoedGekeurd
             locationCreationDto.Name= AddLocationName.Text;
             locationCreationDto.ExtraInfo= AddLocationExtraInfo.Text;
 
-            _locationManager.AddLocation(locationCreationDto);
+            await _locationManager.AddLocationAsync(locationCreationDto);
+            RefreshDatagrid();
         }
     }
 }

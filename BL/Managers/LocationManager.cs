@@ -22,7 +22,7 @@ namespace BL.Managers
             _mapper = mapper;
         }
 
-        public int AddLocation(LocationCreationDto locDto)
+        public async Task<int> AddLocationAsync(LocationCreationDto locDto)
         {
             //todo - automapper
             //Location loc = new();
@@ -36,7 +36,7 @@ namespace BL.Managers
 
             Location loc = _mapper.Map<Location>(locDto);
 
-            return _locRepo.Add(loc);
+            return await _locRepo.AddAsync(loc);
         }
     }
 }

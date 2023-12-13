@@ -31,7 +31,7 @@ namespace EFDal.Repositories
             return await _dbContext.Planning.ToListAsync();
         }
 
-        public async Task<int> AddAsync(Planning planning, Customer cust, List<Product> products)
+        public async Task<int> AddAsync(Planning planning, Customer cust, List<Product> products, Location loc)
         {
             planning.LastUpdate = DateTime.Now;
 
@@ -47,6 +47,18 @@ namespace EFDal.Repositories
                 _dbContext.Attach(existingCustomer);
             }
             planning.Customer = existingCustomer;
+
+            var existingLocation = _dbContext.Set<Location>().Local.FirstOrDefault(l => l.Id == loc.Id);
+            if (existingLocation == null)
+            {
+                existingLocation = await _dbContext.Set<Location>().FindAsync(loc.Id);
+            }
+
+            if (existingLocation != null)
+            {
+                _dbContext.Attach(existingLocation);
+            }
+            planning.Location = existingLocation;
 
             _dbContext.Planning.Add(planning);
 

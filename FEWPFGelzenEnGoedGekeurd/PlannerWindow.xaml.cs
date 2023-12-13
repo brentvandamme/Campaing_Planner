@@ -28,15 +28,19 @@ namespace FEWPFGelzenEnGoedGekeurd
         ICustomerManager _customerManager;
         IProductManager _productManager;
         IPlanningManager _planningManager;
+        ILocationManager _locationManager;
+        List<Location> _locations;
 
-        public PlannerWindow(ICustomerManager customerManager, IProductManager productManager, IPlanningManager planningmanager)
+        public PlannerWindow(ICustomerManager customerManager, IProductManager productManager, IPlanningManager planningmanager, ILocationManager locationManager)
         {
             InitializeComponent();
             _customerManager= customerManager;
             _productManager= productManager;
             _planningManager = planningmanager;
+            _locationManager= locationManager;
             ProductListbox.ItemsSource = _productManager.GetAll();
             CustomerListbox.ItemsSource = _customerManager.GetAll();
+            LocationDatagrid.ItemsSource = _locationManager.GetAll();
             planningDatagrid.ItemsSource= _planningManager.GetAllWithIncludes();
         }
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
@@ -131,7 +135,7 @@ namespace FEWPFGelzenEnGoedGekeurd
         {
             Planning newplanning = new Planning();
             List<Product> Products = new();
-
+            Location location = new();
 
             foreach (var selectedItem in ProductListbox.SelectedItems)
             {
@@ -141,8 +145,6 @@ namespace FEWPFGelzenEnGoedGekeurd
                 }
             }
 
-
-            // Get the existing Customer object from the ListBox
             Customer existingCustomer = CustomerListbox.SelectedItem as Customer;
 
             if (existingCustomer == null || ProductListbox.SelectedItems == null)
@@ -150,14 +152,12 @@ namespace FEWPFGelzenEnGoedGekeurd
                 MessageBox.Show("Please select all required fields.");
             }
 
-            // Set other properties of newPlanning, StartVerhuur, EndVerhuur, etc.
             newplanning.StartVerhuur = GetSelectedStartTime();
             newplanning.EndVerhuur = GetSelectedEndTime();
+            location = LocationDatagrid.SelectedItem as Location;
 
-            // Add the new Planning object to the DbContext
-            await _planningManager.AddAsync(newplanning, existingCustomer, Products);
+            await _planningManager.AddAsync(newplanning, existingCustomer, Products, location);
 
-            // Refresh the data grid with the updated data
             planningDatagrid.ItemsSource = _planningManager.GetAllWithIncludes();
         }
 

@@ -19,9 +19,9 @@
         <TextBox HorizontalAlignment="Left" Margin="10,157,0,0" TextWrapping="Wrap" Text="Zip" VerticalAlignment="Top" Width="402" Name="AddLocationZip" Height="31"/>
         <TextBox HorizontalAlignment="Left" Margin="10,193,0,0" TextWrapping="Wrap" Text="Street" VerticalAlignment="Top" Width="402" Name="AddLocationStreet" Height="31"/>
         <TextBox HorizontalAlignment="Left" Margin="10,229,0,0" TextWrapping="Wrap" Text="Number" VerticalAlignment="Top" Width="402" Name="AddLocationNumber" Height="31"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,229,0,0" TextWrapping="Wrap" Text="Extra info" VerticalAlignment="Top" Width="402" Name="AddLocationExtraInfo" Height="156"/>
+        <TextBox HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Extra info" VerticalAlignment="Center" Width="402" Name="AddLocationExtraInfo" Height="156"/>
         <Button Content="Add Location" HorizontalAlignment="Left" Margin="10,604,0,0" VerticalAlignment="Top" Click="AddLocationButton_Button_Click" Name="AddLocationButton"/>
-        <DataGrid Name="LocationsDatagrid" Margin="462,113,27,48"></DataGrid>
+        <DataGrid Name="LocationsDatagrid" Margin="462,113,27,48" CanUserAddRows="False"></DataGrid>
 
     </Grid>
 </Window>
