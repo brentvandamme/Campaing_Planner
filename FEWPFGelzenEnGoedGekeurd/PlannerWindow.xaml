@@ -63,7 +63,7 @@
                 <DataGridTextColumn Header="Location Name" Binding="{Binding Location.Name}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Export to csv" HorizontalAlignment="Left" Margin="1182,656,0,0" VerticalAlignment="Top"/>
+        <Button Content="Export to csv" HorizontalAlignment="Left" Margin="1182,656,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         <Label Content="Start verhuur" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" FontSize="20"/>
         <DatePicker x:Name="datePickerEnd" Margin="10,277,941,367" />
         <ComboBox Grid.Column="0" x:Name="EndHour" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" SelectedIndex="8" SelectionChanged="Time_SelectionChanged" Margin="12,325,1206,314">
@@ -91,7 +91,7 @@
         </ComboBox>
         <Label Content="Einde Verhuur" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" FontSize="20"/>
         <Label Content="Planning" HorizontalAlignment="Left" Margin="549,56,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <ListBox Name="ProductListbox" Margin="12,426,1125,23" SelectionChanged="ProductListbox_SelectionChanged" SelectionMode="Multiple"/>
+        <ListBox Name="ProductListbox" Margin="12,426,1125,23" SelectionChanged="ProductListbox_SelectionChanged" SelectionMode="Single"/>
         <ListBox Name="CustomerListbox" Margin="174,426,963,23" SelectionMode="Single"/>
         <DataGrid Name="LocationDatagrid" Margin="345,426,745,23" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>

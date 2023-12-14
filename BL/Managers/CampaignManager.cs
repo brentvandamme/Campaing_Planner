@@ -52,6 +52,14 @@ namespace BL.Managers
 
             return campaignsList;
         }
+        //public async Task<List<Campaign>> GetAllCampaignsAsync()
+        //{
+        //    return await _repo.GetAllAsync();
+        //}
+        public async Task<List<Campaign>> GetCampaignsByProductIdAsync(int productId)
+        {
+            return await _repo.GetCampaignsByProductId(productId);
+        }
 
     }
 }

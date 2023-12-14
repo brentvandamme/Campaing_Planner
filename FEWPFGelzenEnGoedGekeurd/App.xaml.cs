@@ -53,6 +53,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             services.AddTransient<ProductWindow>();
             services.AddTransient<PlannerWindow>();
             services.AddTransient<LocationWindow>();
+            ShutdownMode = ShutdownMode.OnLastWindowClose;
 
             ServiceProvider = services.BuildServiceProvider();
 

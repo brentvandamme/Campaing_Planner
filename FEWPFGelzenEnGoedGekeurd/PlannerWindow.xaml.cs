@@ -166,7 +166,16 @@ namespace FEWPFGelzenEnGoedGekeurd
             planningDatagrid.ItemsSource = _planningManager.GetAllWithIncludes();
         }
 
-        
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_planningManager.GenerateCSV())
+            {
+                MessageBox.Show($"Error: whilst generating csv", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show("CSV file generated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
     }
 }

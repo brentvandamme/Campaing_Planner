@@ -12,5 +12,7 @@ namespace BL.Managers.Interfaces
        Task AddAsync(Planning planning, Customer customer, List<Product> product, Location loc);
 
         List<Planning> GetAllWithIncludes();
+
+        bool GenerateCSV();
     }
 }

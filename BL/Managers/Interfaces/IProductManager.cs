@@ -16,8 +16,10 @@ namespace BL.Managers.Interfaces
 
         Task<List<Product>> GetAllProductsWithFreeSpots();
 
-        void Update(ProductAddingDto dto);
+        //void Update(ProductAddingDto dto);
 
-        Task UpdateAsync(ProductAddingDto dto);
+        //Task UpdateAsync(ProductAddingDto dto);
+        Task<int> AddProductWithCampaignsAsync(ProductAddingDto productDto, List<Campaign> campaigns);
+        Task UpdateProductWithCampaignsAsync(ProductAddingDto productDto, List<Campaign> campaigns);
     }
 }
