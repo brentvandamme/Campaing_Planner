@@ -13,6 +13,7 @@ namespace EFDal.Repositories.Interfaces
         //Task<int> AddAsync(Campaign campaign);
 
         Task<int> GetNumberOfLinkedCampaignsToProduct(int productId);
+        Task<List<Campaign>> GetCampaignsByProductId(int productId);
 
     }
 }

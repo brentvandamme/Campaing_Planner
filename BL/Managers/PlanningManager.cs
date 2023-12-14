@@ -22,10 +22,6 @@ namespace BL.Managers
             await _repo.AddAsync(planning, customer, Product, loc);
         }
 
-        public async Task<IEnumerable<Planning>> GetAllAsync()
-        {
-            return await _repo.GetAllAsync();
-        }
         public List<Planning> GetAllWithIncludes()
         {
             return _repo.GetAllWithIncludes();

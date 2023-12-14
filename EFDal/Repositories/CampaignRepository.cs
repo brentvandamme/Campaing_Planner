@@ -11,8 +11,11 @@ namespace EFDal.Repositories
 {
     public class CampaignRepository : GenericRepository<Campaign>, ICampaignRepository
     {
+
+        CPDbContext _context;
         public CampaignRepository(CPDbContext dbContext) : base(dbContext)
         {
+            _context = dbContext;
         }
 
         public async Task<int> GetNumberOfLinkedCampaignsToProduct(int productId)
@@ -21,6 +24,12 @@ namespace EFDal.Repositories
             {
                 return _dbSet.Count(campaign => campaign.ProductId == productId);
             });
+        }
+        public async Task<List<Campaign>> GetCampaignsByProductId(int productId)
+        {
+            return await _context.Set<Campaign>()
+                .Where(c => c.ProductId == productId)
+                .ToListAsync();
         }
 
     }

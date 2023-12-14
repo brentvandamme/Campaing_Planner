@@ -14,11 +14,4 @@ namespace EFDal.Entities
         public int? ProductId { get; set; }
         public Product? product { get; set; }
     }
-
-    public enum KindOfCampaign
-    {
-        Affiche = 0,
-        Folder = 1,
-        Other = 2,
-    }
 }

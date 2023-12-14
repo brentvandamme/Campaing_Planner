@@ -9,7 +9,6 @@ namespace EFDal.Repositories.Interfaces
 {
     public interface IPlanningRepository : IGenericRepository<Planning>
     {
-        List<Planning> GetPlanningByTimeSpan(DateTime dateTime, DateTime endTime);
 
         Task<int> AddAsync(Planning planning, Customer cust, List<Product> Product, Location loc);
 

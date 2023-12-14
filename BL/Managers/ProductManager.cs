@@ -86,17 +86,51 @@ namespace BL.Managers
             return productsWithCapacity;
         }
 
-        public void Update(ProductAddingDto dto)
+        //public void Update(ProductAddingDto dto)
+        //{
+        //    Product prod = _mapper.Map<Product>(dto);
+        //    _repository.Update(prod);
+        //}
+
+
+        //public async Task UpdateAsync(ProductAddingDto dto)
+        //{
+        //    Product prod = _mapper.Map<Product>(dto);
+        //    await _productRepositrory.UpdateAsync(prod);
+        //}
+        public async Task<int> AddProductWithCampaignsAsync(ProductAddingDto productDto, List<Campaign> campaigns)
         {
-            Product prod = _mapper.Map<Product>(dto);
-            _repository.Update(prod);
+            Product product = _mapper.Map<Product>(productDto);
+
+            int productId = await _productRepositrory.AddAsync(product);
+
+            if (productId != 0)
+            {
+                var newProduct = await GetByIdAsync(productId);
+
+                foreach (var campaign in campaigns)
+                {
+                    campaign.product = newProduct;
+                    campaign.ProductId = newProduct.Id;
+                    await _campaignRepository.UpdateAsync(campaign);
+                }
+            }
+
+            return productId;
         }
-
-
-        public async Task UpdateAsync(ProductAddingDto dto)
+        public async Task UpdateProductWithCampaignsAsync(ProductAddingDto productDto, List<Campaign> campaigns)
         {
-            Product prod = _mapper.Map<Product>(dto);
+            Product prod = _mapper.Map<Product>(productDto);
             await _productRepositrory.UpdateAsync(prod);
+
+            Product newProduct = await GetByIdAsync(productDto.Id);
+
+            foreach (var campaign in campaigns)
+            {
+                campaign.product = newProduct;
+                campaign.ProductId = newProduct.Id;
+                await _campaignRepository.UpdateAsync(campaign);
+            }
         }
     }
 }

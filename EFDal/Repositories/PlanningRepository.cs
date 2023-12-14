@@ -19,18 +19,6 @@ namespace EFDal.Repositories
             _dbContext = dbContext;
         }
 
-        public List<Planning> GetPlanningByTimeSpan(DateTime startTime, DateTime endTime)
-        {
-            return _dbSet
-                .Where(planning => planning.StartVerhuur >= startTime && planning.EndVerhuur <= endTime)
-                .ToList();
-        }
-
-        public async Task<IEnumerable<Planning>> GetAllAsync()
-        {
-            return await _dbContext.Planning.ToListAsync();
-        }
-
         public async Task<int> AddAsync(Planning planning, Customer cust, List<Product> products, Location loc)
         {
             planning.LastUpdate = DateTime.Now;
@@ -81,13 +69,6 @@ namespace EFDal.Repositories
 
             return planning.Id;
         }
-
-
-
-
-
-
-
 
         public List<Planning> GetAllWithIncludes()
         {
