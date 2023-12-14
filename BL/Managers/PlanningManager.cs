@@ -30,8 +30,10 @@ namespace BL.Managers
             return _repo.GetAllWithIncludes();
         }
 
+        //todo eric: optioneel file access kan gezien worden als een aparte DAL laag 
         public bool GenerateCSV()
         {
+            //todo eric: complexe structuren kan je beter naar json serializen/deserializen en opslaan ipv csv
             var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             var filePath = Path.Combine(desktopPath, "planning_data.csv");
 
@@ -39,6 +41,7 @@ namespace BL.Managers
 
             try
             {
+                
                 using (var writer = new StreamWriter(filePath))
                 using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
                 {
@@ -66,11 +69,14 @@ namespace BL.Managers
                     csv.NextRecord();
 
                     // Manually write records
+                    //todo eric:
+                    //csv.WriteRecords(allWithIncludes);?
                     foreach (var planning in allWithIncludes)
                     {
                         csv.WriteField(planning?.StartVerhuur);
                         csv.WriteField(planning?.EndVerhuur);
 
+                        //todo eric: gaat waarschijnlijk mis gaan als er meer dan 1 product is(csv is een platte tabel)
                         foreach (var planningProduct in planning.PlanningProduct)
                         {
                             csv.WriteField(planningProduct.Product?.Name);
