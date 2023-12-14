@@ -41,6 +41,12 @@ namespace BL.Managers
 
         public async Task<int> GetProductCapacity(int id)
         {
+            //todo eric: kan in 1 query met dapper
+            //select p.p.Id, p.MaxAvailableCapacity, p.Price, p.Name, p.LastUpdate, count(c.id) inUse, (p.MaxAvailableCapacity - count(c.id)) available
+            //from Product p
+            //join Campaigns c on c.ProductId = p.Id and p.id = 2 (Parameter gebruiken hier)
+            //group by p.Id, p.MaxAvailableCapacity, p.Price, p.Name, p.LastUpdate;
+
             Product product = await _productRepositrory.GetByIdAsync(id);
 
             if (product == null)
@@ -63,6 +69,12 @@ namespace BL.Managers
         {
             List<Product> products =await _productRepositrory.GetAllAsync();
 
+            //todo eric: 2* query in lus kan zwaar worden bij veel products
+            // kan in 1 query met dapper
+            //select p.Id, p.MaxAvailableCapacity, p.Price, p.Name, p.LastUpdate, count(c.id) inUse, (p.MaxAvailableCapacity - count(c.id)) available
+            //from Product p
+            //join Campaigns c on c.ProductId = p.Id 
+            //group by p.Id, p.MaxAvailableCapacity, p.Price, p.Name, p.LastUpdate;
             foreach (var item in products)
             {
                 item.CurrentCapacity = await GetProductCapacity(item.Id);
@@ -73,6 +85,7 @@ namespace BL.Managers
 
         public async Task<List<Product>> GetAllProductsWithFreeSpots()
         {
+            //todo eric: zie vorige
             List<Product> products = await GetAllProductsAsync();
             List<Product> productsWithCapacity = new();
             foreach (var item in products)

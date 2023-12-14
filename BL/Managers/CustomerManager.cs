@@ -35,6 +35,7 @@ namespace BL.Managers
         {
             //this is dapper
             await _repo.DeleteAsync(customerId);
+            
         }
 
         public async Task UpdateCustomerAsync(Customer customer)

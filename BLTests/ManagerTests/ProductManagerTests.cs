@@ -15,9 +15,12 @@ namespace BLTests.ManagerTests
     [TestClass]
     public class ProductManagerTests
     {
+        //todo eric: meer testen mogen altijd ;p
         [TestMethod]
         public async Task AddAsync_ShouldReturnProductId()
         {
+            //todo eric: algemene setup in een [TestInitialize] plaatsen zodat je die niet elke keer moet herhalen
+
             // Arrange
             var productRepositoryMock = new Mock<IProductRepositrory>();
             var campaignRepositoryMock = new Mock<ICampaignRepository>();

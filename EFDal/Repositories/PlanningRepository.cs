@@ -35,12 +35,26 @@ namespace EFDal.Repositories
         {
             planning.LastUpdate = DateTime.Now;
 
+            //todo eric: deze voelt niet goed ;p
+            //als we zeker zijn dat de customer al bestaat kunnen we zo iets doen (in principe al er een id in zit)
+            // anders mag hij er zo in en gaat ef de nieuwe customer inserten
+            // dan hadden we de customer (en de rest) al in de planning kunnen steken voor de aanroep van deze method
+            // 
+            //if (!_dbContext.ChangeTracker.Entries<Customer>().Any(e => e.Entity.Id == cust.Id))
+            //{
+            //    //unchanged zodat hij de customer die mogelijk enkel een id heeft niet gaat updaten
+            //    _dbContext.Attach(cust).State = EntityState.Unchanged;
+            //}
+            //planning.Customer = cust;
+
+
             var existingCustomer = _dbContext.Set<Customer>().Local.FirstOrDefault(c => c.Id == cust.Id);
 
             if (existingCustomer == null)
             {
                 existingCustomer = await _dbContext.Set<Customer>().FindAsync(cust.Id);
             }
+
 
             if (existingCustomer != null)
             {
@@ -60,12 +74,16 @@ namespace EFDal.Repositories
             }
             planning.Location = existingLocation;
 
+            //hier zou je 
+            //base.Add(planning); kunnen oproepen dan moet je de lastupdate hier ook niet meer zetten
             _dbContext.Planning.Add(planning);
 
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             List<PlanningProduct> planningProducts = new List<PlanningProduct>();
-
+            //kan normaal naar boven voor de save changes
+            // als je de nieuwe in planning.PlanningProduct steekt
+            // dan zou hij ze moeten mee opslaan
             foreach (var item in products)
             {
                 PlanningProduct pp = new PlanningProduct
@@ -81,13 +99,6 @@ namespace EFDal.Repositories
 
             return planning.Id;
         }
-
-
-
-
-
-
-
 
         public List<Planning> GetAllWithIncludes()
         {

@@ -21,9 +21,10 @@ namespace EFDal.Repositories
         public async Task UpdateAsync(Product product)
         {
             var existingProduct = await GetByIdAsync(product.Id);
-
             if (existingProduct != null)
             {
+                //todo eric: automapper?
+
                 existingProduct.Price = product.Price;
                 existingProduct.MaxAvailableCapacity = product.MaxAvailableCapacity;
                 existingProduct.Name = product.Name;

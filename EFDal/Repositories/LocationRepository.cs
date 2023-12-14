@@ -11,6 +11,7 @@ namespace EFDal.Repositories
 {
     public class LocationRepository : GenericRepository<Location>, ILocationRepository
     {
+        //todo eric: leeg, nodig?
         public LocationRepository(CPDbContext dbContext) : base(dbContext)
         {
         }

@@ -54,11 +54,20 @@ namespace FEWPFGelzenEnGoedGekeurd
             RefreshCustomerList();
         }
 
+        //todo eric: volgende code zit in elk scherm, eventueel in een helper steken
+
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {
             var Window = App.ServiceProvider.GetService<MainWindow>();
             Window.Left = this.Left;
             Window.Top = this.Top;
+            //todo eric: door de vensters te hiden sluit de applicatie niet meer af als je eerst naar eenderd welk ander scherm gaat
+            //die blijven in de achtergrond open staan, ik ben geen wpf expert maar ik denk dat enkel de mainwindow die je als singleton hebt levend gaat moeten blijven
+            //bij de andere schermen ga je een this.close() kunnen doen als je weg gaat
+            //of 
+            //bij de schermen de OnClosing overriden en daar voor de mainwindow ook close oproepen
+            //maar al de geopende schermen blijven in mem zitten
+            //check process mem als je de app via visual studio draait, customer blijven openen doet niet veel (mainwindow singleton altijd dezelfde) maar bij de rest altijd mem jump die niet weg gaat
             this.Hide();
             Window.Show();
         }

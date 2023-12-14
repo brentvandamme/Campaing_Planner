@@ -19,6 +19,7 @@ namespace EFDal.Repositories
         }
         public async Task DeleteAsync(int customerId)
         {
+            //todo eric: de connectie best met een using statment gebruiken zodat ze zeker afgesloten wordt
             string sql = "DELETE FROM Customer WHERE Id = @CustomerId";
             await _dbContext.Database.GetDbConnection().ExecuteAsync(sql, new { CustomerId = customerId });
         }
