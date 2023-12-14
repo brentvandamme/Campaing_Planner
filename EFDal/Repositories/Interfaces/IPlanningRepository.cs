@@ -13,5 +13,6 @@ namespace EFDal.Repositories.Interfaces
         Task<int> AddAsync(Planning planning, Customer cust, List<Product> Product, Location loc);
 
         List<Planning> GetAllWithIncludes();
+        List<Planning> GetAllWithIncludesWithCampaigns();
     }
 }

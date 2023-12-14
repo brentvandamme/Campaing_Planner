@@ -79,5 +79,15 @@ namespace EFDal.Repositories
                 .Include(p => p.Location)
                 .ToList();
         }
+        public List<Planning> GetAllWithIncludesWithCampaigns()
+        {
+            return _dbContext.Planning
+                .Include(p => p.Customer)
+                .Include(p => p.PlanningProduct)
+                    .ThenInclude(pp => pp.Product)
+                        .ThenInclude(p => p.Campaigns)
+                .Include(p => p.Location)
+                .ToList();
+        }
     }
 }
