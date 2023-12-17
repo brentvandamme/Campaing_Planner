@@ -37,7 +37,7 @@ namespace FEWPFGelzenEnGoedGekeurd
             services.AddTransient<ICampaignRepository, CampaignRepository>();
             services.AddTransient<IProductRepositrory, ProductRepository>();
             services.AddTransient<IPlanningRepository, PlanningRepository>();
-            services.AddTransient<ILocationRepository, LocationRepository>();
+            //services.AddTransient<ILocationRepository, LocationRepository>();
 
             // Managers
             services.AddTransient(typeof(IGenericManager<>), typeof(GenericManager<>));

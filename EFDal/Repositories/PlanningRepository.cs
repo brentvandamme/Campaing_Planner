@@ -21,57 +21,33 @@ namespace EFDal.Repositories
 
         public async Task<int> AddAsync(Planning planning, Customer cust, List<Product> products, Location loc)
         {
-            planning.LastUpdate = DateTime.Now;
-
-            //todo eric: deze voelt niet goed ;p
-            //als we zeker zijn dat de customer al bestaat kunnen we zo iets doen (in principe al er een id in zit)
-            // anders mag hij er zo in en gaat ef de nieuwe customer inserten
-            // dan hadden we de customer (en de rest) al in de planning kunnen steken voor de aanroep van deze method
-            // 
-            //if (!_dbContext.ChangeTracker.Entries<Customer>().Any(e => e.Entity.Id == cust.Id))
-            //{
-            //    //unchanged zodat hij de customer die mogelijk enkel een id heeft niet gaat updaten
-            //    _dbContext.Attach(cust).State = EntityState.Unchanged;
-            //}
-            //planning.Customer = cust;
-
-
-            var existingCustomer = _dbContext.Set<Customer>().Local.FirstOrDefault(c => c.Id == cust.Id);
-
-            if (existingCustomer == null)
+            var existingCustomerEntry = _dbContext.ChangeTracker.Entries<Customer>().FirstOrDefault(e => e.Entity.Id == cust.Id);
+            if (existingCustomerEntry == null)
             {
-                existingCustomer = await _dbContext.Set<Customer>().FindAsync(cust.Id);
+                //nog niet getracked
+                _dbContext.Attach(cust).State = EntityState.Unchanged;
+                planning.Customer = cust;
+            }
+            else
+            {
+                //al getracked
+                var existingCustomer = existingCustomerEntry.Entity;
+                planning.Customer = existingCustomer;
             }
 
-
-            if (existingCustomer != null)
+            var existingLocationEntry = _dbContext.ChangeTracker.Entries<Location>().FirstOrDefault(e => e.Entity.Id == loc.Id);
+            if (existingLocationEntry == null)
             {
-                _dbContext.Attach(existingCustomer);
+                _dbContext.Attach(loc).State = EntityState.Unchanged;
+                planning.Location = loc;
             }
-            planning.Customer = existingCustomer;
-
-            var existingLocation = _dbContext.Set<Location>().Local.FirstOrDefault(l => l.Id == loc.Id);
-            if (existingLocation == null)
+            else
             {
-                existingLocation = await _dbContext.Set<Location>().FindAsync(loc.Id);
+                var existingLocation = existingLocationEntry.Entity;
+                planning.Location = existingLocation;
             }
-
-            if (existingLocation != null)
-            {
-                _dbContext.Attach(existingLocation);
-            }
-            planning.Location = existingLocation;
-
-            //hier zou je 
-            //base.Add(planning); kunnen oproepen dan moet je de lastupdate hier ook niet meer zetten
-            _dbContext.Planning.Add(planning);
-
-            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             List<PlanningProduct> planningProducts = new List<PlanningProduct>();
-            //kan normaal naar boven voor de save changes
-            // als je de nieuwe in planning.PlanningProduct steekt
-            // dan zou hij ze moeten mee opslaan
             foreach (var item in products)
             {
                 PlanningProduct pp = new PlanningProduct
@@ -81,7 +57,9 @@ namespace EFDal.Repositories
                 };
                 planningProducts.Add(pp);
             }
-            _dbContext.PlanningProduct.AddRange(planningProducts);
+            planning.PlanningProduct= planningProducts;
+
+            await base.AddAsync(planning);
 
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 
