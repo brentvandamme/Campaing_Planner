@@ -16,7 +16,7 @@ namespace FEWPFGelzenEnGoedGekeurd.Helpers
             window.Left = currentWindow.Left;
             window.Top = currentWindow.Top;
 
-            if (typeof(T) == typeof(MainWindow))
+            if (typeof(T) == typeof(MainWindow) && currentWindow is not MainWindow)
             {
                 currentWindow.Close();
             }
@@ -24,7 +24,15 @@ namespace FEWPFGelzenEnGoedGekeurd.Helpers
             {
                 currentWindow.Hide();
             }
-            window.Show();
+
+            if (!window.IsVisible)
+            {
+                window.Show();
+            }
+            else
+            {
+                window.Activate();
+            }
 
         }
     }

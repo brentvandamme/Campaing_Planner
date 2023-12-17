@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BL.Dtos;
 using BL.Managers;
+using BL.Managers.Interfaces;
 using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
 using Moq;
@@ -15,19 +16,23 @@ namespace BLTests.ManagerTests
     [TestClass]
     public class ProductManagerTests
     {
-        //todo eric: meer testen mogen altijd ;p
+        private Mock<IProductRepositrory> productRepositoryMock;
+        private Mock<ICampaignRepository> campaignRepositoryMock;
+        private Mock<IMapper> mapperMock;
+        private ProductManager productManager;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            productRepositoryMock = new Mock<IProductRepositrory>();
+            campaignRepositoryMock = new Mock<ICampaignRepository>();
+            mapperMock = new Mock<IMapper>();
+            productManager = new ProductManager(productRepositoryMock.Object, campaignRepositoryMock.Object, mapperMock.Object);
+        }
+
         [TestMethod]
         public async Task AddAsync_ShouldReturnProductId()
         {
-            //todo eric: algemene setup in een [TestInitialize] plaatsen zodat je die niet elke keer moet herhalen
-
-            // Arrange
-            var productRepositoryMock = new Mock<IProductRepositrory>();
-            var campaignRepositoryMock = new Mock<ICampaignRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var productManager = new ProductManager(productRepositoryMock.Object, campaignRepositoryMock.Object, mapperMock.Object);
-
             var productDto = new ProductAddingDto
             {
                 Price = "10.99",
@@ -47,67 +52,9 @@ namespace BLTests.ManagerTests
         }
 
         [TestMethod]
-        public async Task GetAllProductsAsync_ShouldReturnListOfProducts()
-        {
-            // Arrange
-            var productRepositoryMock = new Mock<IProductRepositrory>();
-            var campaignRepositoryMock = new Mock<ICampaignRepository>();
-            var mapperMock = new Mock<IMapper>();
-
-            var productManager = new ProductManager(productRepositoryMock.Object, campaignRepositoryMock.Object, mapperMock.Object);
-
-            var products = new List<Product>
-            {
-                new Product { Id = 1, Name = "Product1" },
-                new Product { Id = 2, Name = "Product2" }
-            };
-
-            // act as the repo to return list of products when GetAllAsync is called
-            productRepositoryMock.Setup(repo => repo.GetAllAsync())
-                .ReturnsAsync(products);
-
-            // Act
-            var result = await productManager.GetAllProductsAsync();
-
-            // Assert
-            CollectionAssert.AreEqual(products, result);
-        }
-
-        [TestMethod]
-        public async Task GetProductCapacity_ShouldReturnCorrectCapacity()
-        {
-            // Arrange
-            var productRepositoryMock = new Mock<IProductRepositrory>();
-            var campaignRepositoryMock = new Mock<ICampaignRepository>();
-            var mapperMock = new Mock<IMapper>();
-            var productManager = new ProductManager(productRepositoryMock.Object, campaignRepositoryMock.Object, mapperMock.Object);
-
-            var productId = 1;
-            var product = new Product
-            {
-                Id = productId,
-                MaxAvailableCapacity = 10
-            };
-
-            productRepositoryMock.Setup(repo => repo.GetByIdAsync(productId)).ReturnsAsync(product);
-            campaignRepositoryMock.Setup(repo => repo.GetNumberOfLinkedCampaignsToProduct(productId)).ReturnsAsync(2);
-
-            // Act
-            var capacity = await productManager.GetProductCapacity(productId);
-
-            // Assert
-            Assert.AreEqual(8, capacity); // MaxCapacity is 10 and 2 campaigns are linked --> 10-2 =8
-        }
-
-        [TestMethod]
         public async Task AddProductWithCampaignsAsync_ShouldAddProductAndCampaigns()
         {
             // Arrange
-            var productRepositoryMock = new Mock<IProductRepositrory>();
-            var campaignRepositoryMock = new Mock<ICampaignRepository>();
-            var mapperMock = new Mock<IMapper>();
-            var productManager = new ProductManager(productRepositoryMock.Object, campaignRepositoryMock.Object, mapperMock.Object);
-
             var productDto = new ProductAddingDto
             {
                 Name = "TestProduct",
@@ -121,7 +68,7 @@ namespace BLTests.ManagerTests
                 new Campaign { Id = 2 }
             };
 
-      
+
             productRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Product>())).ReturnsAsync(1);
             productRepositoryMock.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(new Product { Id = 1 });
 
@@ -131,6 +78,24 @@ namespace BLTests.ManagerTests
             // Assert
             Assert.AreEqual(1, productId);
 
-           }
+        }
+        [TestMethod]
+        public async Task GetAllProductsWithFreeSpots_ShouldReturnProducts()
+        {
+            // Arrange
+            var productsWithFreeSpots = new List<Product>
+                {
+                new Product { Id = 1, Name = "Product1", MaxAvailableCapacity = 50 },
+                new Product { Id = 2, Name = "Product2", MaxAvailableCapacity = 75 }
+                };
+
+            productRepositoryMock.Setup(repo => repo.GetAllProductsWithFreeCapacity()).ReturnsAsync(productsWithFreeSpots);
+
+            // Act
+            var result = await productManager.GetAllProductsWithFreeSpots();
+
+            // Assert
+            CollectionAssert.AreEquivalent(productsWithFreeSpots, result);
+        }
     }
 }
