@@ -10,5 +10,12 @@ namespace EFDal.Repositories.Interfaces
     public interface IProductRepositrory : IGenericRepository<Product>
     {
         Task UpdateAsync(Product product);
+
+        Task<int> GetProductCapacityById(int productId);
+
+        Task<List<Product>> GetAllProductsWithCapacity();
+
+        Task<List<Product>> GetAllProductsWithFreeCapacity();
+
     }
 }
