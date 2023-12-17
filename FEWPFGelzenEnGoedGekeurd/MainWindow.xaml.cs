@@ -18,6 +18,7 @@ using BL.Managers;
 using BL.Managers.Interfaces;
 using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
+using FEWPFGelzenEnGoedGekeurd.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FEWPFGelzenEnGoedGekeurd
@@ -35,6 +36,10 @@ namespace FEWPFGelzenEnGoedGekeurd
             _manager = manager;
             InitializeComponent();
             RefreshCustomerList();
+        }
+        public MainWindow()
+        {
+            InitializeComponent();
         }
 
         private void RefreshCustomerList()
@@ -55,56 +60,32 @@ namespace FEWPFGelzenEnGoedGekeurd
         }
 
         //todo eric: volgende code zit in elk scherm, eventueel in een helper steken
-
-        private void NavigateToCustomer(object sender, RoutedEventArgs e)
-        {
-            var Window = App.ServiceProvider.GetService<MainWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
             //todo eric: door de vensters te hiden sluit de applicatie niet meer af als je eerst naar eenderd welk ander scherm gaat
             //die blijven in de achtergrond open staan, ik ben geen wpf expert maar ik denk dat enkel de mainwindow die je als singleton hebt levend gaat moeten blijven
             //bij de andere schermen ga je een this.close() kunnen doen als je weg gaat
-            //of 
-            //bij de schermen de OnClosing overriden en daar voor de mainwindow ook close oproepen
-            //maar al de geopende schermen blijven in mem zitten
-            //check process mem als je de app via visual studio draait, customer blijven openen doet niet veel (mainwindow singleton altijd dezelfde) maar bij de rest altijd mem jump die niet weg gaat
-            this.Hide();
-            Window.Show();
-        }
-        private void NavigateToProduct(object sender, RoutedEventArgs e)
-        {
-            var Window = App.ServiceProvider.GetService<ProductWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
-        }
-        private void NavigateToCampaign(object sender, RoutedEventArgs e)
-        {
-            var Window = App.ServiceProvider.GetService<CampaignWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
-        }
-        private void NavigateToPlanning(object sender, RoutedEventArgs e)
-        {
-            var Window = App.ServiceProvider.GetService<PlannerWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
-        }
-        private void NavigateToLocation(object sender, RoutedEventArgs e)
-        {
-            var Window = App.ServiceProvider.GetService<LocationWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
-        }
+                //fixed
+            private void NavigateToCustomer(object sender, RoutedEventArgs e)
+            {
+                NavigationHelper.NavigateTo<MainWindow>(this);
+            }
+            private void NavigateToProduct(object sender, RoutedEventArgs e)
+            {
+                NavigationHelper.NavigateTo<ProductWindow>(this);
+            }
+            private void NavigateToCampaign(object sender, RoutedEventArgs e)
+            {
+                NavigationHelper.NavigateTo<CampaignWindow>(this);
+            }
+            private void NavigateToPlanning(object sender, RoutedEventArgs e)
+            {
+                NavigationHelper.NavigateTo<PlannerWindow>(this);
+            }
+            private void NavigateToLocation(object sender, RoutedEventArgs e)
+            {
+                NavigationHelper.NavigateTo<LocationWindow>(this);
+            }
 
-        private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
+            private async void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CustomerDatagrid.SelectedItem is Customer selectedCustomer)
             {

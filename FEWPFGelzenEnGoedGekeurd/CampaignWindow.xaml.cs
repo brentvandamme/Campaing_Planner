@@ -2,6 +2,7 @@
 using BL.Managers.Interfaces;
 using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
+using FEWPFGelzenEnGoedGekeurd.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -44,43 +45,23 @@ namespace FEWPFGelzenEnGoedGekeurd
         }
         private void NavigateToCustomer(object sender, RoutedEventArgs e)
         {
-            var Window = App.ServiceProvider.GetService<MainWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
+            NavigationHelper.NavigateTo<MainWindow>(this);
         }
         private void NavigateToProduct(object sender, RoutedEventArgs e)
         {
-            var Window = App.ServiceProvider.GetService<ProductWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
+            NavigationHelper.NavigateTo<ProductWindow>(this);
         }
         private void NavigateToCampaign(object sender, RoutedEventArgs e)
         {
-            var Window = App.ServiceProvider.GetService<CampaignWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
+            NavigationHelper.NavigateTo<CampaignWindow>(this);
         }
         private void NavigateToPlanning(object sender, RoutedEventArgs e)
         {
-            var Window = App.ServiceProvider.GetService<PlannerWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
+            NavigationHelper.NavigateTo<PlannerWindow>(this);
         }
         private void NavigateToLocation(object sender, RoutedEventArgs e)
         {
-            var Window = App.ServiceProvider.GetService<LocationWindow>();
-            Window.Left = this.Left;
-            Window.Top = this.Top;
-            this.Hide();
-            Window.Show();
+            NavigationHelper.NavigateTo<LocationWindow>(this);
         }
 
         private void KindOfCampaignsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
