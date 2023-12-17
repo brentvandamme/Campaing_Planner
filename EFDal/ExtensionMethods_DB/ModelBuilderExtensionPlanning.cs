@@ -19,19 +19,6 @@ namespace EFDal.ExtensionMethods_DB
             modelBuilder.Entity<Planning>()
                 .Property(p => p.EndVerhuur)
                 .IsRequired(false);
-            //modelBuilder.Entity<Planning>()
-            //    .Property(p => p.Location)
-            //    .IsRequired(false);
-            //modelBuilder.Entity<Planning>()
-            //    .Property(p => p.Products)
-            //    .IsRequired(false);
-            //modelBuilder.Entity<Planning>()
-            //    .Property(p => p.Customer)
-            //    .IsRequired(false);
-
-            //relations
-            //modelBuilder.Entity<Planning>()
-            //    .HasMany(p => p.Products);
 
         }
     }

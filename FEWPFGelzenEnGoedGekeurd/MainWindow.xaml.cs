@@ -37,10 +37,6 @@ namespace FEWPFGelzenEnGoedGekeurd
             InitializeComponent();
             RefreshCustomerList();
         }
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
 
         private void RefreshCustomerList()
         {
@@ -58,12 +54,6 @@ namespace FEWPFGelzenEnGoedGekeurd
             await _manager.AddAsync(customer);
             RefreshCustomerList();
         }
-
-        //todo eric: volgende code zit in elk scherm, eventueel in een helper steken
-            //todo eric: door de vensters te hiden sluit de applicatie niet meer af als je eerst naar eenderd welk ander scherm gaat
-            //die blijven in de achtergrond open staan, ik ben geen wpf expert maar ik denk dat enkel de mainwindow die je als singleton hebt levend gaat moeten blijven
-            //bij de andere schermen ga je een this.close() kunnen doen als je weg gaat
-                //fixed
             private void NavigateToCustomer(object sender, RoutedEventArgs e)
             {
                 NavigationHelper.NavigateTo<MainWindow>(this);

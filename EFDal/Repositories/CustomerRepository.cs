@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,36 @@ namespace EFDal.Repositories
         }
         public async Task DeleteAsync(int customerId)
         {
-            //todo eric: de connectie best met een using statment gebruiken zodat ze zeker afgesloten wordt
+            //delete related plannings
+            var planningsToDelete = await _dbContext.Planning
+                .Where(p => p.Customer.Id == customerId)
+                .ToListAsync();
+
+            _dbContext.Planning.RemoveRange(planningsToDelete);
+            await _dbContext.SaveChangesAsync();
+
+            //delete customers
             string sql = "DELETE FROM Customer WHERE Id = @CustomerId";
-            await _dbContext.Database.GetDbConnection().ExecuteAsync(sql, new { CustomerId = customerId });
+            using (var connection = new SqlConnection(_dbContext.Database.GetDbConnection().ConnectionString))
+            {
+                await connection.OpenAsync();
+                await connection.ExecuteAsync(sql, new { CustomerId = customerId });
+            }
+
+            // Save changes to persist deletions
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Customer customer)
         {
             string sql = "UPDATE Customer SET FirstName = @FirstName, LastName = @LastName, Company = @Company WHERE Id = @Id";
-            await _dbContext.Database.GetDbConnection().ExecuteAsync(sql, customer);
+
+            using (var connection = new SqlConnection(_dbContext.Database.GetDbConnection().ConnectionString))
+            {
+                await connection.OpenAsync();
+
+                await _dbContext.Database.GetDbConnection().ExecuteAsync(sql, customer);
+            }
         }
 
     }
