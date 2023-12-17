@@ -10,6 +10,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using FileAccessDal;
 
 namespace BL.Managers
 {
@@ -33,82 +35,9 @@ namespace BL.Managers
         //todo eric: optioneel file access kan gezien worden als een aparte DAL laag 
         public bool GenerateCSV()
         {
-            //todo eric: complexe structuren kan je beter naar json serializen/deserializen en opslaan ipv csv
-            var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            var filePath = Path.Combine(desktopPath, "planning_data.csv");
-
-            var allWithIncludes = _repo.GetAllWithIncludesWithCampaigns();
-
-            try
-            {
-                
-                using (var writer = new StreamWriter(filePath))
-                using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
-                {
-                    // Manually write header
-                    csv.WriteField("start verhuur");
-                    csv.WriteField("einde verhuur");
-
-                    csv.WriteField("product name");
-                    csv.WriteField("product MaxAvailableCapacity");
-                    csv.WriteField("product related campagnes");
-
-                    csv.WriteField("location name");
-                    csv.WriteField("location city");
-                    csv.WriteField("location zip");
-                    csv.WriteField("location street");
-                    csv.WriteField("location number");
-                    csv.WriteField("location extra info");
-
-                    csv.WriteField("customer first name");
-                    csv.WriteField("customer last name");
-                    csv.WriteField("customer company");
-                    // Add more fields as needed...
-
-                    // End the header line
-                    csv.NextRecord();
-
-                    // Manually write records
-                    //todo eric:
-                    //csv.WriteRecords(allWithIncludes);?
-                    foreach (var planning in allWithIncludes)
-                    {
-                        csv.WriteField(planning?.StartVerhuur);
-                        csv.WriteField(planning?.EndVerhuur);
-
-                        //todo eric: gaat waarschijnlijk mis gaan als er meer dan 1 product is(csv is een platte tabel)
-                        foreach (var planningProduct in planning.PlanningProduct)
-                        {
-                            csv.WriteField(planningProduct.Product?.Name);
-                            csv.WriteField(planningProduct.Product?.MaxAvailableCapacity);
-
-                            var campaignNames = planningProduct.Product?.Campaigns.Select(c => c.Name);
-                            var campaignsField = campaignNames != null ? string.Join(", ", campaignNames) : null;
-                            csv.WriteField(campaignsField);
-                        }
-
-                        csv.WriteField(planning.Location?.Name);
-                        csv.WriteField(planning.Location?.City);
-                        csv.WriteField(planning.Location?.Zip);
-                        csv.WriteField(planning.Location?.Street);
-                        csv.WriteField(planning.Location?.Number);
-                        csv.WriteField(planning.Location?.ExtraInfo);
-
-                        csv.WriteField(planning.Customer?.FirstName);
-                        csv.WriteField(planning.Customer?.LastName);
-                        csv.WriteField(planning.Customer?.Company);
-
-                        csv.NextRecord();
-                    }
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // Handle exception
-                return false;
-            }
+            var exportCsvClass = new FileAccessDal.ExportPlanningCSVClass(_repo);
+            bool success = exportCsvClass.GenerateJson();
+            return success;
         }
     }
 }

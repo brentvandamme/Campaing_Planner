@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EFDal\EFDal.csproj" />
+    <ProjectReference Include="..\FileAccessDal\FileAccessDal.csproj" />
   </ItemGroup>
 
 </Project>
