@@ -25,15 +25,7 @@ namespace BL.Managers
         }
 
         public async Task<int> AddAsync(ProductAddingDto productdto) {
-            //Product product = new Product();
             Product product = _mapper.Map<Product>(productdto);
-
-            //float price = float.Parse(productdto.Price);
-            //int maxCapacity = productdto.MaxAvailableCapacity;
-            //product.Price = price;
-            //product.MaxAvailableCapacity = maxCapacity;
-            //product.Name = productdto.Name;
-            //product.Campaigns = productdto.Campaigns;
 
             return await _productRepositrory.AddAsync(product);
         }
