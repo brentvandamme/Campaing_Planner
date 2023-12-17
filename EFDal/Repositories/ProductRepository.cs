@@ -1,4 +1,5 @@
-﻿using EFDal.Entities;
+﻿using AutoMapper;
+using EFDal.Entities;
 using EFDal.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,16 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 
 namespace EFDal.Repositories
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepositrory
     {
         private readonly CPDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public ProductRepository(CPDbContext dbContext) : base(dbContext)
+        public ProductRepository(CPDbContext dbContext, IMapper mapper) : base(dbContext)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task UpdateAsync(Product product)
@@ -23,11 +27,7 @@ namespace EFDal.Repositories
             var existingProduct = await GetByIdAsync(product.Id);
             if (existingProduct != null)
             {
-                //todo eric: automapper?
-
-                existingProduct.Price = product.Price;
-                existingProduct.MaxAvailableCapacity = product.MaxAvailableCapacity;
-                existingProduct.Name = product.Name;
+                _mapper.Map(product, existingProduct);
 
                 await _dbContext.SaveChangesAsync();
             }

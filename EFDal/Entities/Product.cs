@@ -9,7 +9,6 @@ namespace EFDal.Entities
 {
     public class Product : BaseEntity
     {
-        //todo eric: berekend veld? 
         public int? MaxAvailableCapacity { get; set; }
 
         [NotMapped]

@@ -99,18 +99,6 @@ namespace BL.Managers
             return productsWithCapacity;
         }
 
-        //public void Update(ProductAddingDto dto)
-        //{
-        //    Product prod = _mapper.Map<Product>(dto);
-        //    _repository.Update(prod);
-        //}
-
-
-        //public async Task UpdateAsync(ProductAddingDto dto)
-        //{
-        //    Product prod = _mapper.Map<Product>(dto);
-        //    await _productRepositrory.UpdateAsync(prod);
-        //}
         public async Task<int> AddProductWithCampaignsAsync(ProductAddingDto productDto, List<Campaign> campaigns)
         {
             Product product = _mapper.Map<Product>(productDto);

@@ -20,6 +20,8 @@ namespace BL.Mappingprofiles
             CreateMap<CustomerCreationDto, Customer>();
 
             CreateMap<ProductAddingDto, Product>();
+
+            CreateMap<Product, Product>();
         }
     }
 }

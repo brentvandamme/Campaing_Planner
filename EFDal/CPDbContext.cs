@@ -34,8 +34,6 @@ namespace EFDal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //todo eric: gebruik van extention methods:
-            //modelBuilder.ProductConfig();
             ModelBuilderExtensionProduct.ProductConfig(modelBuilder);
             ModelBuilderExtensionCampaign.CampaignConfig(modelBuilder);
             ModelBuilderExtensionCustomer.CustomerConfig(modelBuilder);
