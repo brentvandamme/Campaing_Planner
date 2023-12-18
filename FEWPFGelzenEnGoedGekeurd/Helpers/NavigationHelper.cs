@@ -15,14 +15,14 @@ namespace FEWPFGelzenEnGoedGekeurd.Helpers
             var window = App.ServiceProvider.GetService<T>();
             window.Left = currentWindow.Left;
             window.Top = currentWindow.Top;
-
-            if (typeof(T) == typeof(MainWindow) && currentWindow is not MainWindow)
+            //todo eric fix
+            if (currentWindow is MainWindow) //typeof(T) == typeof(MainWindow) &&
             {
-                currentWindow.Close();
+                currentWindow.Hide();
             }
             else
             {
-                currentWindow.Hide();
+                currentWindow.Close();
             }
 
             if (!window.IsVisible)

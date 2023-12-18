@@ -34,8 +34,12 @@ namespace EFDal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            ModelBuilderExtensionProduct.ProductConfig(modelBuilder);
-            ModelBuilderExtensionCampaign.CampaignConfig(modelBuilder);
+            modelBuilder.ProductConfig();
+            modelBuilder.CampaignConfig();
+
+
+            //ModelBuilderExtensionProduct.ProductConfig(modelBuilder);
+            //ModelBuilderExtensionCampaign.CampaignConfig(modelBuilder);
             ModelBuilderExtensionCustomer.CustomerConfig(modelBuilder);
             ModelBuilderExtensionPlanning.PlanningConfig(modelBuilder);
             ModelBuilderExtensionLocation.LocationConfig(modelBuilder);
