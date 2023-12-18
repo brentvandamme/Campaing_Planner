@@ -36,14 +36,9 @@ namespace EFDal
         {
             modelBuilder.ProductConfig();
             modelBuilder.CampaignConfig();
-
-
-            //ModelBuilderExtensionProduct.ProductConfig(modelBuilder);
-            //ModelBuilderExtensionCampaign.CampaignConfig(modelBuilder);
-            ModelBuilderExtensionCustomer.CustomerConfig(modelBuilder);
-            ModelBuilderExtensionPlanning.PlanningConfig(modelBuilder);
-            ModelBuilderExtensionLocation.LocationConfig(modelBuilder);
-
+            modelBuilder.CustomerConfig();
+            modelBuilder.PlanningConfig();
+            modelBuilder.LocationConfig();
         }
     }
 }
